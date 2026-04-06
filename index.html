@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ffffff"> 
-    <title>더엠수학학원 | 관리자 대시보드</title>
+    <title>더엠수학학원 | 원장님 대시보드</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,8 +12,6 @@
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; color: #1e293b; overflow-x: hidden; }
         .active-press:active { background-color: #f8fafc; transform: scale(0.98); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        
-        /* PC에서 한 화면에 다 들어오도록 패딩 조정 */
         @media (min-width: 768px) {
             .main-container { height: 100vh; overflow-y: auto; }
         }
@@ -27,14 +25,14 @@
                 <i class="fa-solid fa-square-root-variable"></i> 더엠수학
             </h1>
             <div class="flex items-center gap-1 md:hidden">
-                <button class="text-slate-400 p-2"><i class="fa-solid fa-key"></i></button>
-                <button class="text-slate-400 p-2"><i class="fa-solid fa-power-off"></i></button>
+                <button title="비밀번호변경" class="text-slate-400 p-2"><i class="fa-solid fa-key"></i></button>
+                <button title="로그아웃" class="text-slate-400 p-2"><i class="fa-solid fa-power-off"></i></button>
                 <button id="mobile-menu-btn" class="text-slate-400 p-2"><i class="fa-solid fa-bars text-xl"></i></button>
             </div>
         </div>
         
         <nav id="nav-menu" class="hidden md:flex flex-1 flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
-            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-[0.2em]">Main</div>
+            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-[0.2em]">Main Dash</div>
             <a href="#" class="flex items-center gap-3 px-4 py-2.5 bg-emerald-50 text-emerald-700 rounded-xl font-bold">
                 <i class="fa-solid fa-house w-5 text-center text-sm"></i> 홈
             </a>
@@ -49,100 +47,110 @@
                 <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl transition-all text-sm"><i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항</a>
                 <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl transition-all text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트</a>
             </div>
-            <div class="pt-4 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-[0.2em]">Management</div>
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl transition-all text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl transition-all text-sm"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 반관리</a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl transition-all text-sm"><i class="fa-solid fa-gear w-5 text-center"></i> 설정</a>
         </nav>
+
+        <div class="hidden md:block p-4 border-t border-slate-50">
+            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl">
+                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white font-bold">원</div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-slate-800 truncate">김주호 원장님</p>
+                    <button class="text-[10px] text-rose-500 font-bold hover:underline">로그아웃</button>
+                </div>
+            </div>
+        </div>
     </aside>
 
     <main class="flex-1 flex flex-col min-w-0 bg-white main-container">
         <header class="hidden md:flex h-14 bg-white border-b border-slate-50 items-center justify-between px-8 flex-shrink-0">
             <div class="text-slate-400 text-xs font-medium italic">2026. 04. 07 (TUE) Dashboard</div>
-            <div class="flex items-center gap-4 text-xs font-bold">
-                <button class="text-slate-400 hover:text-emerald-600"><i class="fa-solid fa-key mr-1"></i> 비번변경</button>
-                <button class="text-slate-400 hover:text-rose-500"><i class="fa-solid fa-power-off mr-1"></i> 로그아웃</button>
+            <div class="flex items-center gap-5 text-xs font-bold">
+                <button class="text-slate-400 hover:text-emerald-600 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-key"></i> 비밀번호변경
+                </button>
+                <button class="text-slate-400 hover:text-rose-500 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-power-off"></i> 로그아웃
+                </button>
             </div>
         </header>
 
-        <div class="p-5 md:p-8 w-full mx-auto">
-            <div class="mb-6 md:mb-8">
-                <h2 class="text-xl md:text-3xl font-black text-slate-800 tracking-tight">관리자님 안녕하세요! 👋</h2>
-                <p class="text-slate-400 text-xs md:text-sm mt-1">오늘의 더엠수학 현황을 한눈에 확인하세요.</p>
+        <div class="p-5 md:p-10 w-full mx-auto max-w-7xl">
+            <div class="mb-6 md:mb-10 text-center md:text-left">
+                <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">김주호 원장님 안녕하세요! 👋</h2>
+                <p class="text-slate-400 text-sm md:text-lg mt-1.5 font-medium">오늘의 더엠수학 현황을 확인하세요.</p>
             </div>
 
-            <div class="grid grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-3 md:gap-5">
                 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 text-emerald-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-user-group text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-user-group text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">학생현황</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">4명</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">학생현황</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">4명</span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-blue-50 text-blue-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-layer-group text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-layer-group text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">반현황</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">15개</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">반현황</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">15개</span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 text-emerald-600 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-book-open text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-book-open text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">숙제현황</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">3 <span class="text-rose-500 text-[10px] md:text-xs">미1</span></span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">숙제현황</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">3 <span class="text-rose-500 text-[10px] md:text-base font-bold">미1</span></span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 text-emerald-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-star text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-star text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">굿티커</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">128</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">굿티커</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">128</span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 text-emerald-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-user-check text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-user-check text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">출결현황</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">0/4</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">출결현황</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">0/4</span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 text-emerald-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-clock-rotate-left text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-clock-rotate-left text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">보강현황</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">2건</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">보강현황</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">2건</span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-orange-50 text-orange-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-calendar-check text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-calendar-check text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">수업일지</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">작성</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">수업일지</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">작성</span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 text-emerald-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-bullhorn text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-bullhorn text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">공지사항</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">5건</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">공지사항</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">5건</span>
                 </button>
 
-                <button class="active-press bg-white border border-slate-100 rounded-xl md:rounded-3xl p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-36">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-purple-50 text-purple-500 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3">
-                        <i class="fa-solid fa-chart-line text-sm md:text-lg"></i>
+                <button class="active-press bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] p-3 md:p-6 flex flex-col items-center justify-center hover:border-emerald-200 transition-all shadow-sm h-28 md:h-44">
+                    <div class="w-9 h-9 md:w-12 md:h-12 bg-purple-50 text-purple-500 rounded-xl flex items-center justify-center mb-2 md:mb-4">
+                        <i class="fa-solid fa-chart-line text-base md:text-xl"></i>
                     </div>
-                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase">학습리포트</span>
-                    <span class="text-sm md:text-xl font-black text-slate-800 mt-0.5">보기</span>
+                    <span class="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-tighter">학습리포트</span>
+                    <span class="text-base md:text-2xl font-black text-slate-800 mt-0.5">보기</span>
                 </button>
 
             </div>
