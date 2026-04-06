@@ -2,232 +2,135 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#ecfdf5"> 
-    <title>더엠수학 | 모바일 대시보드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더엠수학학원 | 관리자 대시보드</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f0fdf4; overflow-x: hidden; }
-        
-        /* 모바일 슬라이드 메뉴 스타일 */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%); /* 처음에 숨김 */
-        }
-        #mobile-menu.open {
-            transform: translateX(0); /* 열림 */
-        }
-        
-        /* 카드형 메뉴 텍스트 줄바꿈 방지 및 중앙 정렬 */
-        .card-text {
-            word-break: keep-all;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; }
+        /* 사이드바 메뉴 활성화 스타일 */
+        .nav-active { background-color: #f0fdf4; color: #059669; font-weight: 700; }
+        /* 카드 호버 효과 */
+        .menu-card { transition: all 0.2s ease; }
+        .menu-card:hover { transform: translateY(-5px); shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #10b981; }
     </style>
 </head>
-<body class="safe-area">
+<body class="flex min-h-screen">
 
-    <header class="sticky top-0 z-50 bg-white border-b border-emerald-100 px-4 h-16 flex items-center justify-between shadow-sm">
-        <h1 class="text-xl font-bold flex items-center gap-1 text-emerald-700">
-            <i class="fa-solid fa-square-root-variable text-emerald-500"></i> 더엠수학
-        </h1>
-        <div class="flex items-center gap-2">
-            <button title="비밀번호 변경" class="text-emerald-500 hover:text-emerald-700 p-2"><i class="fa-solid fa-key text-lg"></i></button>
-            <button title="로그아웃" class="text-emerald-400 hover:text-rose-500 p-2"><i class="fa-solid fa-power-off text-lg"></i></button>
-            <button id="menu-open-btn" class="text-emerald-700 hover:text-emerald-900 p-2 ml-1">
-                <i class="fa-solid fa-bars text-2xl"></i>
-            </button>
-        </div>
-    </header>
-
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300"></div>
-    <aside id="mobile-menu" class="fixed top-0 right-0 h-screen w-[280px] bg-white z-50 shadow-2xl flex flex-col border-l border-emerald-100">
-        <div class="p-6 border-b border-emerald-100 flex items-center justify-between bg-emerald-50">
-            <h2 class="text-lg font-bold text-emerald-800">전체 메뉴</h2>
-            <button id="menu-close-btn" class="text-emerald-400 hover:text-emerald-700"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <aside class="w-64 bg-white border-r border-slate-100 flex flex-col flex-shrink-0">
+        <div class="p-6 border-b border-slate-50">
+            <h1 class="text-2xl font-black text-emerald-600 flex items-center gap-2">
+                <i class="fa-solid fa-square-root-variable"></i> 더엠수학
+            </h1>
         </div>
         
-        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 bg-emerald-100 text-emerald-800 rounded-xl font-bold">
+        <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <div class="pb-2 text-[11px] font-bold text-slate-400 px-4 uppercase tracking-widest">Main Menu</div>
+            <a href="#" class="nav-active flex items-center gap-3 px-4 py-3 rounded-xl transition-all">
                 <i class="fa-solid fa-house w-5 text-center"></i> 홈
             </a>
             
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all">
-                <i class="fa-solid fa-user-group w-5 text-center text-emerald-600"></i> 학생현황
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all">
-                <i class="fa-solid fa-layer-group w-5 text-center text-emerald-600"></i> 반현황
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all">
-                <i class="fa-solid fa-book-open w-5 text-center text-emerald-600"></i> 숙제현황
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all font-bold text-emerald-600">
+                <i class="fa-solid fa-book-open w-5 text-center"></i> 숙제현황
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all text-orange-600 font-medium">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
                 <i class="fa-solid fa-star w-5 text-center"></i> 굿티커현황
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all">
-                <i class="fa-solid fa-user-check w-5 text-center text-emerald-600"></i> 출결현황
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-user-check w-5 text-center"></i> 출결현황
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all">
-                <i class="fa-solid fa-clock-rotate-left w-5 text-center text-emerald-600"></i> 보강현황
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> 보강현황
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all">
-                <i class="fa-solid fa-bullhorn w-5 text-center text-emerald-600"></i> 공지사항
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all">
-                <i class="fa-solid fa-chart-line w-5 text-center text-emerald-600"></i> 학습리포트
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트
             </a>
 
-            <div class="pt-5 pb-2 text-[11px] font-bold text-emerald-400 px-4 uppercase tracking-widest">관리</div>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all text-sm">
-                <i class="fa-solid fa-user-graduate w-5 text-center text-emerald-500"></i> 학생관리
+            <div class="pt-6 pb-2 text-[11px] font-bold text-slate-400 px-4 uppercase tracking-widest">Management</div>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리
             </a>
-            <a href="#" class="flex items-center gap-3.5 px-4 py-3 hover:bg-emerald-50 rounded-xl transition-all text-sm">
-                <i class="fa-solid fa-chalkboard-user w-5 text-center text-emerald-500"></i> 반관리
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 반관리
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
+                <i class="fa-solid fa-gear w-5 text-center"></i> 설정
             </a>
         </nav>
 
-        <div class="p-4 border-t border-emerald-100 bg-emerald-50/50">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold shadow-inner">관</div>
+        <div class="p-4 border-t border-slate-50">
+            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl">
+                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white font-bold shadow-sm">관</div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-bold text-emerald-900 truncate">관리자님</p>
-                    <p class="text-[10px] text-emerald-600">them-math.com</p>
+                    <p class="text-sm font-bold text-slate-800 truncate">관리자님</p>
+                    <p class="text-xs text-slate-400">them-math</p>
                 </div>
             </div>
         </div>
     </aside>
 
-    <main class="p-4 flex-1 flex flex-col min-h-[calc(100vh-64px)]">
-        <div class="flex items-center justify-center pt-2 pb-5">
-            <span class="bg-emerald-100/70 backdrop-blur-[1px] text-emerald-800 px-4 py-1.5 rounded-full text-sm font-bold shadow-inner">2026년 4월 7일 (화)</span>
-        </div>
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <header class="h-16 bg-white border-b border-slate-50 flex items-center justify-between px-10 sticky top-0 z-10">
+            <div class="text-slate-400 text-sm font-medium">2026년 4월 7일 (화요일)</div>
+            <div class="flex items-center gap-6">
+                <button class="text-slate-500 hover:text-emerald-600 font-medium transition-colors"><i class="fa-solid fa-key mr-1"></i> 비밀번호 변경</button>
+                <button class="text-slate-500 hover:text-rose-500 font-medium transition-colors"><i class="fa-solid fa-right-from-bracket mr-1"></i> 로그아웃</button>
+            </div>
+        </header>
 
-        <div class="mb-6 text-center">
-            <h2 class="text-2xl font-black text-slate-800 leading-tight">관리자님 안녕하세요! 👋</h2>
-            <p class="text-emerald-700 mt-1.5 font-medium italic text-sm">"오늘도 아이들의 성장을 위해 함께합니다."</p>
-        </div>
+        <div class="p-10 max-w-7xl">
+            <div class="mb-10">
+                <h2 class="text-4xl font-black text-slate-800 tracking-tight">관리자님 안녕하세요! 👋</h2>
+                <p class="text-slate-400 text-lg mt-2 font-medium italic">"오늘의 더엠수학학원 현황입니다."</p>
+            </div>
 
-        <div class="grid grid-cols-3 gap-3.5 flex-1">
-            
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border border-emerald-50 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner">
-                <div class="w-10 h-10 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 mb-2.5 shadow-inner">
-                    <i class="fa-solid fa-user-group text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-tight">학생현황</p>
-                    <h3 class="text-xl font-black text-slate-800 mt-0.5">4명</h3>
-                </div>
-            </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <button class="menu-card bg-white border border-slate-100 rounded-[2rem] p-8 flex flex-col items-center justify-center shadow-sm">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-user-group text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">학생현황</span>
+                    <span class="text-3xl font-black text-slate-800 mt-2">4명</span>
+                </button>
 
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border border-emerald-50 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner">
-                <div class="w-10 h-10 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-2.5 shadow-inner">
-                    <i class="fa-solid fa-layer-group text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-tight">반현황</p>
-                    <h3 class="text-xl font-black text-slate-800 mt-0.5">15개</h3>
-                </div>
-            </button>
+                <button class="menu-card bg-white border border-slate-100 rounded-[2rem] p-8 flex flex-col items-center justify-center shadow-sm">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-layer-group text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">반현황</span>
+                    <span class="text-3xl font-black text-slate-800 mt-2">15개</span>
+                </button>
 
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border-2 border-emerald-300 bg-emerald-50/20 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner">
-                <div class="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-emerald-600 mb-2.5 shadow-sm">
-                    <i class="fa-solid fa-book-open text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-emerald-700 font-bold uppercase tracking-tight">숙제현황</p>
-                    <h3 class="text-lg font-black text-slate-800 mt-0.5 whitespace-nowrap"><span class="text-lg">3</span><span class="text-emerald-300 mx-0.5">|</span><span class="text-rose-500 text-xs font-bold">미1</span></h3>
-                </div>
-            </button>
+                <button class="menu-card bg-white border-2 border-emerald-400 rounded-[2rem] p-8 flex flex-col items-center justify-center shadow-md">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-book-open text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-bold text-emerald-600 uppercase tracking-widest">숙제현황</span>
+                    <span class="text-3xl font-black text-slate-800 mt-2">완료 3 <span class="text-rose-500 text-xl font-bold ml-2">미완 1</span></span>
+                </button>
 
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border border-emerald-50 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner">
-                <div class="w-10 h-10 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-500 mb-2.5 shadow-inner">
-                    <i class="fa-solid fa-star text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-tight">굿티커현황</p>
-                    <h3 class="text-xl font-black text-slate-800 mt-0.5">128개</h3>
-                </div>
-            </button>
+                <button class="menu-card bg-white border border-slate-100 rounded-[2rem] p-8 flex flex-col items-center justify-center shadow-sm">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-star text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">굿티커현황</span>
+                    <span class="text-3xl font-black text-slate-800 mt-2">128개</span>
+                </button>
 
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border border-emerald-50 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner">
-                <div class="w-10 h-10 bg-teal-50 rounded-2xl flex items-center justify-center text-teal-600 mb-2.5 shadow-inner">
-                    <i class="fa-solid fa-user-check text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-tight">출결현황</p>
-                    <h3 class="text-xl font-black text-slate-800 mt-0.5 whitespace-nowrap">0/4</h3>
-                </div>
-            </button>
-
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border border-emerald-50 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner">
-                <div class="w-10 h-10 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600 mb-2.5 shadow-inner">
-                    <i class="fa-solid fa-clock-rotate-left text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-tight">보강현황</p>
-                    <h3 class="text-xl font-black text-slate-800 mt-0.5">2건</h3>
-                </div>
-            </button>
-
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border border-emerald-50 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner col-span-1">
-                <div class="w-10 h-10 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-2.5 shadow-inner">
-                    <i class="fa-solid fa-bullhorn text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-tight">공지사항</p>
-                    <h3 class="text-xl font-black text-slate-800 mt-0.5">5건</h3>
-                </div>
-            </button>
-
-            <button class="bg-white p-4.5 rounded-2xl shadow-sm border border-emerald-50 flex flex-col items-center justify-center aspect-square transition-all active:scale-95 active:shadow-inner col-span-2">
-                <div class="w-10 h-10 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-2.5 shadow-inner">
-                    <i class="fa-solid fa-chart-line text-lg"></i>
-                </div>
-                <div class="card-text">
-                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-tight">학습리포트</p>
-                    <h3 class="text-base font-black text-slate-800 mt-0.5 whitespace-nowrap">분석 완료</h3>
-                </div>
-            </button>
-
-        </div>
-    </main>
-
-    <nav class="sticky bottom-0 z-50 bg-white border-t border-emerald-100 px-6 h-18 flex items-center justify-around shadow-[0_-2px_10px_rgba(16,185,129,0.05)] pb-safe">
-        <a href="#" class="flex flex-col items-center gap-1.5 text-emerald-800">
-            <i class="fa-solid fa-house text-xl"></i>
-            <span class="text-xs font-bold">홈</span>
-        </a>
-        <a href="#" class="flex flex-col items-center gap-1.5 text-emerald-500/80 hover:text-emerald-700">
-            <i class="fa-solid fa-clipboard-check text-xl"></i>
-            <span class="text-xs font-medium">출결</span>
-        </a>
-        <a href="#" class="flex flex-col items-center gap-1.5 text-emerald-500/80 hover:text-emerald-700 relative">
-            <i class="fa-solid fa-book-open text-xl"></i>
-            <span class="text-xs font-medium">숙제</span>
-            <span class="absolute -top-1.5 -right-2 bg-rose-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-black">1</span>
-        </a>
-    </nav>
-
-    <script>
-        const menuOpenBtn = document.getElementById('menu-open-btn');
-        const menuCloseBtn = document.getElementById('menu-close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('mobile-menu-overlay');
-
-        function toggleMenu() {
-            mobileMenu.classList.toggle('open');
-            overlay.classList.toggle('hidden');
-        }
-
-        menuOpenBtn.addEventListener('click', toggleMenu);
-        menuCloseBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu); // 오버레이 클릭 시 닫기
-    </script>
-
-</body>
-</html>
+                <button class="menu-card bg-white border border-slate-100 rounded-[2rem] p-8 flex flex-col items-center justify-center shadow-sm">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-user-check text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">출결현황</span>
+                    <span class="text-3xl font-black text-slate-800 mt-2">0/4</span>
