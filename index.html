@@ -18,14 +18,10 @@
         }
 
         .animated-bg {
-            /* 옅은 녹색과 에메랄드 톤의 역동적인 그라데이션 */
             background: linear-gradient(-45deg, #a7f3d0, #d1fae5, #ecfdf5, #a7f3d0);
             background-size: 400% 400%;
             animation: gradientMove 10s ease infinite;
         }
-
-        /* 입력창 스타일 */
-        input::placeholder { font-size: 0.875rem; color: #a1a1aa; }
     </style>
 </head>
 <body class="animated-bg flex items-center justify-center min-h-screen relative">
@@ -35,7 +31,7 @@
     <div class="w-full max-w-md p-8 relative z-10">
         <div class="text-center mb-10">
             <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">더엠<span class="text-blue-600">수학</span></h1>
-            <p class="text-slate-500 mt-2 font-medium">수학학원 관리 시스템</p>
+            <p class="text-slate-600 mt-2 font-semibold">안녕하세요 더엠입니다.</p>
         </div>
 
         <div class="bg-white p-8 rounded-2xl shadow-xl shadow-emerald-900/10 border border-emerald-100/50">
@@ -65,7 +61,7 @@
             </form>
 
             <div class="mt-6 text-center">
-                <a href="#" class="text-sm text-slate-400 hover:text-slate-600 transition-colors">비밀번호를 잊으셨나요?</a>
+                <a href="#" class="text-sm text-slate-400 hover:text-slate-600 transition-colors font-medium">비밀번호를 잊으셨나요?</a>
             </div>
         </div>
 
@@ -80,11 +76,9 @@
         const eyeIcon = document.getElementById('eye_icon');
 
         togglePasswordButton.addEventListener('click', function () {
-            // 현재 입력 타입 확인
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
             
-            // 아이콘 변경 (눈 뜨고/감고)
             if (type === 'text') {
                 eyeIcon.classList.remove('fa-eye-slash');
                 eyeIcon.classList.add('fa-eye');
