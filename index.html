@@ -13,26 +13,26 @@
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; margin: 0; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
 
-        /* 모바일 상단 바: 배경색(#e3f7f2)과 동일하게 맞춤 */
-        .status-bar { height: 24px; background-color: #e3f7f2; display: none; }
+        /* 모바일 상단 바: 배경색(#e3f7f2)과 일치시켜 파란색 제거 */
+        .status-bar { height: 24px; background-color: #e3f7f2; display: none; width: 100%; }
         
-        /* 모바일용 로그인 배경 (원장님 요청 그린계열) */
-        #login-page { background-color: #e3f7f2; }
+        /* 모바일 전용 배경색 */
+        #login-page { background-color: #e3f7f2; z-index: 50; }
 
         /* PC 레이아웃 설정 */
         @media (min-width: 1024px) {
             body { display: flex; overflow: hidden; background-color: #f8fafc; }
             .sidebar { width: 260px; height: 100vh; background: white; border-right: 1px solid #f1f5f9; flex-shrink: 0; display: flex; flex-direction: column; }
             .main-content { flex: 1; height: 100vh; overflow-y: auto; display: block; }
-            .status-bar { display: none !important; } /* PC에선 상단바 숨김 */
+            .status-bar { display: none !important; }
+            #login-page { position: absolute; inset: 0; }
         }
 
         /* 모바일 화면 설정 */
         @media (max-width: 1023px) {
-            .sidebar { display: none; }
-            .main-content { display: none; }
+            .sidebar, .main-content { display: none; }
             .status-bar { display: block; }
-            #login-page { display: flex !important; }
+            #login-page { display: flex !important; flex-direction: column; height: 100vh; }
         }
     </style>
 </head>
@@ -40,32 +40,35 @@
 
     <div class="status-bar"></div>
 
-    <div id="login-page" class="absolute inset-0 flex flex-col items-center justify-center z-50 p-6">
-        <div class="flex items-center gap-4 mb-8">
-            <img src="logo.png" alt="더엠수학 로고" class="w-14 h-14 object-contain" onerror="this.src='https://via.placeholder.com/60?text=M'">
+    <div id="login-page" class="flex flex-col items-center justify-center p-6">
+        
+        <div class="flex items-center gap-4 mb-10">
+            <img src="logo.png" alt="로고" class="w-14 h-14 object-contain" onerror="this.src='https://via.placeholder.com/60?text=M'">
             <h1 class="text-4xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
         </div>
         
         <div class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-slate-50 text-center w-full max-w-[360px]">
-            <p class="text-slate-500 mb-8 text-base font-bold italic">안녕하세요. 더엠수학학원입니다.</p>
+            <p class="text-slate-500 mb-10 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
             
-            <form id="login-form" class="space-y-5 text-left">
+            <form id="login-form" class="space-y-6 text-left">
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-widest px-1">아이디</label>
-                    <input type="text" value="admin" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
+                    <label class="block text-[11px] font-bold text-slate-400 mb-2 uppercase tracking-widest px-1">아이디</label>
+                    <input type="text" value="admin" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-widest px-1">비밀번호</label>
+                    <label class="block text-[11px] font-bold text-slate-400 mb-2 uppercase tracking-widest px-1">비밀번호</label>
                     <div class="relative">
-                        <input type="password" id="pw-input" value="1234" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
-                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500 transition"></i>
+                        <input type="password" id="pw-input" value="1234" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
+                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500 transition text-lg"></i>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest shadow-lg hover:bg-slate-800 transition mt-2">로그인하기</button>
+                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest shadow-lg hover:bg-slate-800 transition mt-4">로그인하기</button>
             </form>
-            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4">비밀번호를 잊으셨나요?</button>
+
+            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-200">비밀번호를 잊으셨나요?</button>
         </div>
-        <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase italic">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
+        
+        <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
 
     <aside class="sidebar">
@@ -85,7 +88,7 @@
         </header>
         <div class="p-8">
             <h2 class="text-3xl font-black text-slate-800">안녕하세요, 원장님! 👋</h2>
-            <p class="text-slate-400 mt-2">PC 버전 레이아웃이 정상 복구되었습니다.</p>
+            <p class="text-slate-400 mt-2">PC 레이아웃이 성공적으로 복구되었습니다.</p>
         </div>
     </main>
 
@@ -94,6 +97,7 @@
         const pwToggle = document.getElementById('pw-toggle');
         const loginPage = document.getElementById('login-page');
 
+        // 눈동자 토글 기능
         pwToggle.addEventListener('click', function() {
             if (pwInput.type === 'password') {
                 pwInput.type = 'text';
@@ -104,11 +108,11 @@
             }
         });
 
+        // 로그인 이벤트
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            // PC인 경우에만 로그인 후 메인 화면을 보여줌
             if (window.innerWidth >= 1024) {
-                loginPage.style.display = 'none';
+                loginPage.style.display = 'none'; // PC에선 레이어 숨기기
             } else {
                 alert('로그인되었습니다!');
             }
