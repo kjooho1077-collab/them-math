@@ -140,4 +140,45 @@
             <a href="../makeup/index.html" class="fixed-card">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-clock-rotate-left text-lg"></i></div>
                 <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">보강현황</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-
+                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">2건</span>
+            </a>
+
+            <a href="../journals/index.html" class="fixed-card">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-calendar-check text-lg"></i></div>
+                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">수업일지</span>
+                <span class="text-lg font-black text-slate-800 mt-1">작성</span>
+            </a>
+
+            <a href="../notices/index.html" class="fixed-card">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-bullhorn text-lg"></i></div>
+                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">공지사항</span>
+                <span class="text-lg font-black text-slate-800 mt-1">5건</span>
+            </a>
+
+            <a href="../reports/index.html" class="fixed-card">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-chart-line text-lg"></i></div>
+                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학습리포트</span>
+                <span class="text-lg font-black text-slate-800 mt-1">보기</span>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
+
+            if (menuToggle && mobileMenu && menuOverlay) {
+                function toggleMenu() {
+                    mobileMenu.classList.toggle('menu-open');
+                    menuOverlay.classList.toggle('hidden');
+                }
+
+                menuToggle.addEventListener('click', toggleMenu);
+                menuOverlay.addEventListener('click', toggleMenu);
+            }
+        });
+    </script>
+</body>
+</html>
