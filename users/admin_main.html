@@ -38,7 +38,7 @@
             transition: all 0.2s ease-in-out;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             cursor: pointer;
-            text-decoration: none;
+            text-decoration: none; /* 링크 밑줄 제거 */
         }
         @media (min-width: 1024px) {
             .fixed-card { width: 180px; height: 180px; padding: 20px; }
@@ -78,12 +78,7 @@
                 <a href="../reports/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트</a>
             </div>
 
-            <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Management</div>
-            <div class="space-y-0.5">
-                <a href="../manage/students.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
-                <a href="../manage/classes.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 반관리</a>
-                <a href="../manage/teachers.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-gear w-5 text-center"></i> 선생님관리</a>
-                <a href="../manage/settings.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-gear w-5 text-center"></i> 설정</a>
+            <div class="pt-6 space-y-0.5">
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
                     <i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경
                 </a>
@@ -98,6 +93,7 @@
             <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
                 김주호 <span class="text-base md:text-xl font-medium text-slate-500">원장님</span> 안녕하세요! 😄
             </h2>
+            <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium italic">"현명한 관리, 더엠수학!"</p>
         </div>
 
         <div class="stat-card-grid">
@@ -158,6 +154,7 @@
     </main>
 
     <script>
+        // DOM 로드 후 실행 보장
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
