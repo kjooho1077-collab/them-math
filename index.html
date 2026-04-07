@@ -89,37 +89,41 @@
         </div>
     </div>
   
-    <script>
-        const loginForm = document.getElementById('login-form');
-        const idInput = document.getElementById('user-id');
-        const passwordInput = document.getElementById('password_input');
-        const errorMsg = document.getElementById('error-msg');
-        const togglePasswordButton = document.getElementById('toggle_password');
-        const eyeIcon = document.getElementById('eye_icon');
-  
-        // 1. 비밀번호 보이기/숨기기 토글
-        togglePasswordButton.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            eyeIcon.classList.toggle('fa-eye-slash');
-            eyeIcon.classList.toggle('fa-eye');
-        });
+  <script>
+    const loginForm = document.getElementById('login-form');
+    const idInput = document.getElementById('user-id');
+    const passwordInput = document.getElementById('password_input');
+    const errorMsg = document.getElementById('error-msg');
+    const togglePasswordButton = document.getElementById('toggle_password');
+    const eyeIcon = document.getElementById('eye_icon');
 
-        // 2. 로그인 실제 로직 (경로 연결)
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const id = idInput.value;
-            const pw = passwordInput.value;
+    // 1. 비밀번호 보이기/숨기기 토글
+    togglePasswordButton.addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        eyeIcon.classList.toggle('fa-eye-slash');
+        eyeIcon.classList.toggle('fa-eye');
+    });
 
-            // 원장님 아이디 체크
-            if (id === 'admin' && pw === '1234') {
-                // 성공 시 users 폴더 안의 admin_main.html로 이동!
-                location.href = 'users/admin_main.html';
-            } else {
-                // 실패 시 에러 메시지 노출
-                errorMsg.classList.remove('hidden');
-            }
-        });
-    </script>
+    // 2. 로그인 실제 로직 (원장님 & 선생님 구분)
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = idInput.value;
+        const pw = passwordInput.value;
+
+        // 원장님 로그인 체크
+        if (id === 'admin' && pw === '1234') {
+            location.href = 'users/admin_main.html';
+        } 
+        // 선생님 로그인 체크 (새로 추가됨)
+        else if (id === 'teacher' && pw === '1234') {
+            location.href = 'users/teacher_main.html';
+        } 
+        else {
+            // 실패 시 에러 메시지 노출
+            errorMsg.classList.remove('hidden');
+        }
+    });
+</script>
 </body>
 </html>
