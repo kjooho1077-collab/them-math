@@ -2,108 +2,40 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더엠수학 | 로그인</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        /* [핵심] 모든 기울임 요소를 강제로 정자로 고정 */
-        * { font-style: normal !important; } 
-
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #e3f7f2; margin: 0; }
-        
-        #login-page { 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding-top: 4rem; 
-        }
-
-        .login-card {
-            background: white;
-            width: 320px;
-            padding: 2.5rem 2rem;
-            border-radius: 2.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        /* 입력창 포커스 시 테두리 색상 */
-        input:focus { ring: 1px solid #10b981; border-color: #10b981; }
-
-        /* 하단 카피라이트 전용 스타일 (절대 기울지 않게) */
-        .copyright {
-            margin-top: 3rem;
-            font-size: 10px;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-style: normal !important;
-        }
-    </style>
 </head>
-<body>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen">
 
-    <div id="login-page">
-        <div class="flex items-center gap-3 mb-8">
-            <img src="logo.png" alt="로고" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/50?text=M'">
-            <h1 class="text-4xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
+    <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md">
+        <div class="text-center mb-8">
+            <img src="logo.png" alt="Logo" class="w-20 mx-auto mb-4">
+            <h2 class="text-2xl font-bold text-slate-800">더엠수학 관리시스템</h2>
+            <p class="text-slate-400">사용자 계정으로 로그인하세요.</p>
         </div>
-        
-        <div class="login-card">
-            <p class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
-            
-            <form id="login-form" class="space-y-4 text-left">
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">ID</label>
-                    <input type="text" id="user-id" placeholder="아이디를 입력하세요" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm transition">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">Password</label>
-                    <div class="relative">
-                        <input type="password" id="pw-input" placeholder="비밀번호" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm transition">
-                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500"></i>
-                    </div>
-                </div>
-                
-                <p id="error-msg" class="hidden text-rose-500 text-[11px] font-bold text-center mt-2">정보가 올바르지 않습니다.</p>
-                
-                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest mt-4 shadow-lg active:scale-95 transition">로그인하기</button>
-            </form>
 
-            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-100">비밀번호를 잊으셨나요?</button>
-        </div>
-        
-        <div class="copyright">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
+        <form id="login-form" class="space-y-4">
+            <input type="text" id="user-id" placeholder="아이디" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <input type="password" id="pw-input" placeholder="비밀번호" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <button type="submit" class="w-full bg-emerald-500 text-white py-3 rounded-xl font-bold hover:bg-emerald-600 transition">로그인</button>
+        </form>
+        <p id="error-msg" class="text-rose-500 text-sm mt-4 text-center hidden">아이디 또는 비밀번호가 틀렸습니다.</p>
     </div>
 
     <script>
-        const pwInput = document.getElementById('pw-input');
-        const pwToggle = document.getElementById('pw-toggle');
-
-        pwToggle.addEventListener('click', () => {
-            if (pwInput.type === 'password') {
-                pwInput.type = 'text';
-                pwToggle.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                pwInput.type = 'password';
-                pwToggle.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const id = document.getElementById('user-id').value;
-            const pw = pwInput.value;
+            const pw = document.getElementById('pw-input').value;
 
+            // [핵심 수정 부분] 폴더 경로를 명확히 지정해줍니다.
             if (id === 'admin' && pw === '1234') {
-                location.href = 'admin.html';
+                location.href = 'users/admin_main.html'; // 앞에 users/ 를 꼭 붙여야 합니다!
+            } else if (id === 'teacher' && pw === '1234') {
+                location.href = 'users/teacher_main.html';
+            } else if (id === 'student' && pw === '1234') {
+                location.href = 'users/student_main.html';
             } else {
                 document.getElementById('error-msg').classList.remove('hidden');
             }
