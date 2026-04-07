@@ -1,4 +1,3 @@
-users/admin_main.html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,16 +8,17 @@ users/admin_main.html
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* [필독] 모든 글자 정자체 고정 및 경로 최적화 */
+        * { font-style: normal !important; }
+        
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; color: #1e293b; overflow-x: hidden; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* [핵심] 카드 레이아웃 정렬 수정 */
         .stat-card-grid {
             display: grid;
-            /* PC: 한 줄에 무조건 5개씩 배치 (줄을 맞추기 위함) */
             grid-template-columns: repeat(5, 180px); 
             gap: 20px;
-            justify-content: start; /* 왼쪽 정렬로 변경 */
+            justify-content: start;
         }
 
         .fixed-card {
@@ -41,7 +41,6 @@ users/admin_main.html
             border-color: #e2e8f0;
         }
 
-        /* 모바일 대응: 한 줄에 2개씩 */
         @media (max-width: 1024px) {
             .stat-card-grid {
                 grid-template-columns: repeat(auto-fill, 160px);
@@ -59,13 +58,14 @@ users/admin_main.html
     <aside class="w-full md:w-64 bg-white border-r border-slate-100 flex flex-col flex-shrink-0 z-50">
         <div class="p-4 md:p-6 flex items-center justify-between">
             <h1 class="text-xl md:text-2xl font-black text-emerald-600 flex items-center gap-2">
-                <i class="fa-solid fa-square-root-variable"></i> 더엠수학
+                <img src="../logo.png" alt="M" class="w-8 h-8 object-contain" onerror="this.src='https://via.placeholder.com/40?text=M'">
+                더엠수학
             </h1>
         </div>
         
         <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
             <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-[0.2em]">Dashboard</div>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold italic mb-2 text-sm">Home</a>
+            <a href="#" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold mb-2 text-sm">Home</a>
             <div class="space-y-0.5">
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황</a>
@@ -82,14 +82,14 @@ users/admin_main.html
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 반관리</a>
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-gear w-5 text-center"></i> 선생님관리</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-gear w-5 text-center"></i> 설정</a>
+                <a href="../index.html" class="flex items-center gap-3 px-4 py-2 text-rose-400 hover:bg-rose-50 rounded-xl text-sm mt-4"><i class="fa-solid fa-right-from-bracket w-5 text-center"></i> 로그아웃</a>
             </div>
         </nav>
     </aside>
 
     <main class="flex-1 flex flex-col min-w-0 bg-white">
         <header class="hidden md:flex h-14 bg-white border-b border-slate-50 items-center justify-between px-8">
-            <div class="text-slate-300 text-[10px] font-medium italic tracking-widest uppercase">THE M MATH MANAGEMENT SYSTEM</div>
+            <div class="text-slate-300 text-[10px] font-bold tracking-widest uppercase">THE M MATH MANAGEMENT SYSTEM</div>
         </header>
 
         <div class="p-6 md:p-12 w-full mx-auto max-w-7xl">
@@ -97,7 +97,7 @@ users/admin_main.html
                 <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">
                     김주호 <span class="text-lg md:text-xl font-medium text-slate-500">원장님</span> 안녕하세요! 😄
                 </h2>
-                <p class="text-slate-400 text-sm md:text-lg mt-3 font-medium italic">"오늘도 활기찬 더엠수학, 현황을 확인하세요."</p>
+                <p class="text-slate-400 text-sm md:text-lg mt-3 font-medium">"오늘도 활기찬 더엠수학, 현황을 확인하세요."</p>
             </div>
 
             <div class="stat-card-grid">
@@ -126,7 +126,6 @@ users/admin_main.html
                     <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">출결현황</span>
                     <span class="text-2xl font-black text-slate-800 mt-1">0/4</span>
                 </div>
-
                 <div class="fixed-card">
                     <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-clock-rotate-left text-xl"></i></div>
                     <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">보강현황</span>
