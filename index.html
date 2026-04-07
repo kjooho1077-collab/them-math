@@ -88,8 +88,9 @@
             </p>
         </div>
     </div>
-  
-  <script>
+
+    <script>
+    // 1. HTML 요소 연결 (원장님 사진 속 ID와 정확히 일치시킴)
     const loginForm = document.getElementById('login-form');
     const idInput = document.getElementById('user-id');
     const passwordInput = document.getElementById('password_input');
@@ -97,33 +98,52 @@
     const togglePasswordButton = document.getElementById('toggle_password');
     const eyeIcon = document.getElementById('eye_icon');
 
-    // 1. 비밀번호 보이기/숨기기 토글
-    togglePasswordButton.addEventListener('click', function () {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        eyeIcon.classList.toggle('fa-eye-slash');
-        eyeIcon.classList.toggle('fa-eye');
-    });
+    // 2. 비밀번호 눈 모양 아이콘 토글 (보이기/숨기기)
+    if (togglePasswordButton) {
+        togglePasswordButton.addEventListener('click', function () {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            eyeIcon.classList.toggle('fa-eye-slash');
+            eyeIcon.classList.toggle('fa-eye');
+        });
+    }
 
-    // 2. 로그인 실제 로직 (원장님 & 선생님 구분)
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const id = idInput.value;
-        const pw = passwordInput.value;
+    // 3. [메인 로직] 로그인 버튼 클릭 시 실행되는 구간
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // 페이지가 새로고침되는 것을 막습니다.
 
-        // 원장님 로그인 체크
-        if (id === 'admin' && pw === '1234') {
-            location.href = 'users/admin_main.html';
-        } 
-        // 선생님 로그인 체크 (새로 추가됨)
-        else if (id === 'teacher' && pw === '1234') {
-            location.href = 'users/teacher_main.html';
-        } 
-        else {
-            // 실패 시 에러 메시지 노출
-            errorMsg.classList.remove('hidden');
-        }
-    });
+            // 입력한 아이디와 비밀번호 가져오기 (양끝 공백 제거)
+            const id = idInput.value.trim();
+            const pw = passwordInput.value.trim();
+
+            // --- 아이디별 접속 경로 설정 ---
+
+            // [1] 원장님 (admin)
+            if (id === 'admin' && pw === '1234') {
+                location.href = 'users/admin_main.html';
+            } 
+            // [2] 선생님 (teacher)
+            else if (id === 'teacher' && pw === '1234') {
+                location.href = 'users/teacher_main.html';
+            } 
+            // [3] 학생 (student)
+            else if (id === 'student' && pw === '1234') {
+                location.href = 'users/student_main.html';
+            } 
+            // [4] 학부모 (parent)
+            else if (id === 'parent' && pw === '1234') {
+                location.href = 'users/parent_main.html';
+            } 
+            // [!] 그 외 (로그인 실패)
+            else {
+                if (errorMsg) {
+                    errorMsg.classList.remove('hidden'); // 에러 메시지 보여주기
+                }
+            }
+        });
+    }
 </script>
+ 
 </body>
 </html>
