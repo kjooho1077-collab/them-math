@@ -1,499 +1,199 @@
-import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent } from '@/components/ui/card';
-import TeacherStudyReportCard from '@/components/TeacherStudyReportCard';
-import { Button } from '@/components/ui/button';
-import { ClipboardList, BookOpen, Calendar, FileText, CheckCircle, ChevronRight, GraduationCap, ChevronLeft, XCircle, MessageSquare, Users, FileEdit } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import type { UserRole } from '@/types';
-import { format, addDays, subDays } from 'date-fns';
-import { ko } from 'date-fns/locale';
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 원장님 대시보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
 
-interface DashboardStats {
-  totalStudents: number;
-  homeworkDone: number;
-  homeworkNotDone: number;
-  homeworkTotal: number;
-  todayPresent: number;
-  todayTotal: number;
-  makeupPending: number;
-  totalClasses: number;
-  noticesRead: number;
-  noticesTotal: number;
-  notificationsRead: number;
-  notificationsTotal: number;
-  reportsChecked: number;
-  reportsTotal: number;
-  makeupCompleted: number;
-  makeupTotalMonth: number;
-}
+        /* 모바일 메뉴 애니메이션 */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .menu-open { transform: translateX(0) !important; }
 
-interface ChildSummary {
-  id: string;
-  name: string;
-  todayPresent: number;
-  homeworkDone: number;
-  homeworkTotal: number;
-  makeupCount: number;
-}
+        /* 카드 그리드 설정 */
+        .stat-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 모바일: 3열 */
+            gap: 10px;
+            justify-content: start;
+        }
 
-export default function DashboardHome() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const [stats, setStats] = useState<DashboardStats>({ totalStudents: 0, homeworkDone: 0, homeworkNotDone: 0, homeworkTotal: 0, todayPresent: 0, todayTotal: 0, makeupPending: 0, totalClasses: 0, noticesRead: 0, noticesTotal: 0, notificationsRead: 0, notificationsTotal: 0, reportsChecked: 0, reportsTotal: 0, makeupCompleted: 0, makeupTotalMonth: 0 });
-  const [, setChildrenTotal] = useState(0);
-  const [childrenNames, setChildrenNames] = useState<string[]>([]);
-  const [childSummaries, setChildSummaries] = useState<ChildSummary[]>([]);
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [supportMessage, setSupportMessage] = useState<string>('오늘도 힘내자! 🔥');
-  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+        @media (min-width: 1024px) {
+            .stat-card-grid {
+                grid-template-columns: repeat(5, 180px); /* PC: 5열 고정 */
+                gap: 20px;
+            }
+        }
 
-  const isParent = user?.role === 'parent';
-  const isStudent = user?.role === 'student';
-  const isTeacher = user?.role === 'teacher';
-  const childrenIds = user?.childrenIds || [];
+        .fixed-card {
+            background-color: white;
+            border-radius: 1.5rem;
+            border: 1px solid #f1f5f9;
+            padding: 15px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            cursor: pointer;
+        }
 
-  useEffect(() => {
-    loadStats();
-    if (isParent && childrenIds.length > 0) {
-      loadChildrenNames();
-      loadChildSummaries();
-    }
-    if (isStudent) {
-      loadSupportMessage();
-    }
-  }, [currentDate]);
+        @media (min-width: 1024px) {
+            .fixed-card { width: 180px; height: 180px; padding: 20px; }
+            .fixed-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border-color: #e2e8f0; }
+        }
+        .fixed-card:active { transform: scale(0.95); }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen relative overflow-x-hidden">
 
-  const loadSupportMessage = async () => {
-    const { data } = await supabase.from('students').select('support_message').eq('user_id', user!.id).single();
-    if (data?.support_message) setSupportMessage(data.support_message);
-  };
+    <header class="md:hidden bg-white border-b border-slate-100 p-4 flex items-center justify-between sticky top-0 z-[60]">
+        <h1 class="text-xl font-black text-emerald-600 flex items-center gap-2">
+            <img src="../logo.png" alt="M" class="w-7 h-7 object-contain" onerror="this.src='https://via.placeholder.com/40?text=M'">
+            더엠수학
+        </h1>
+        <button id="menu-toggle" class="p-2 text-slate-500">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+    </header>
 
-  const loadChildrenNames = async () => {
-    const { data } = await supabase.from('students').select('name').in('id', childrenIds);
-    setChildrenNames(data?.map(s => s.name) || []);
-  };
-
-  const loadChildSummaries = async () => {
-    const today = format(currentDate, 'yyyy-MM-dd');
-    const monthStart = format(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1), 'yyyy-MM-dd');
-    const monthEnd = format(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0), 'yyyy-MM-dd');
-
-    const { data: children } = await supabase.from('students').select('id, name').in('id', childrenIds);
-    if (!children) return;
-
-    const summaries: ChildSummary[] = [];
-    for (const child of children) {
-      const [attRes, repRes, mkSlotsRes, mkResRes] = await Promise.all([
-        supabase.from('attendance').select('id', { count: 'exact' }).gte('timestamp', `${today}T00:00:00`).lte('timestamp', `${today}T23:59:59`).eq('type', 'arrival').eq('student_id', child.id),
-        supabase.from('study_reports').select('homework_completed').eq('date', today).eq('student_id', child.id),
-        supabase.from('makeup_slots').select('id').gte('date', monthStart).lte('date', monthEnd),
-        supabase.from('makeup_reservations').select('id, slot_id, status').eq('student_id', child.id),
-      ]);
-      const reports = repRes.data || [];
-      const monthSlotIds = new Set((mkSlotsRes.data || []).map(s => s.id));
-      const monthMakeups = (mkResRes.data || []).filter(r => monthSlotIds.has(r.slot_id));
-
-      summaries.push({
-        id: child.id,
-        name: child.name,
-        todayPresent: attRes.count || 0,
-        homeworkDone: reports.filter(r => r.homework_completed).length,
-        homeworkTotal: reports.length,
-        makeupCount: monthMakeups.length,
-      });
-    }
-    setChildSummaries(summaries);
-  };
-
-  const getTeacherStudentIds = async (): Promise<string[]> => {
-    if (!user) return [];
-    const { data: teacherRow } = await supabase.from('teachers').select('id').eq('user_id', user.id).single();
-    if (!teacherRow) return [];
-    const { data: classes } = await supabase.from('classes').select('id, teacher_ids');
-    const myClassIds = (classes || []).filter(c => (c.teacher_ids || []).includes(teacherRow.id)).map(c => c.id);
-    if (myClassIds.length === 0) return [];
-    const { data: studs } = await supabase.from('students').select('id').eq('status', '재원').in('class_id', myClassIds);
-    return (studs || []).map(s => s.id);
-  };
-
-  const loadStats = async () => {
-    const today = format(currentDate, 'yyyy-MM-dd');
-    const monthStart = format(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1), 'yyyy-MM-dd');
-    const monthEnd = format(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0), 'yyyy-MM-dd');
-
-    if (isStudent) {
-      const [noticesRes, studentRes] = await Promise.all([
-        supabase.from('notices').select('id', { count: 'exact' }),
-        supabase.from('students').select('id').eq('user_id', user!.id).single(),
-      ]);
-      const sid = studentRes.data?.id;
-      let studentAttendance = 0;
-      let studentReports: { homework_completed: boolean | null }[] = [];
-      let makeupCompleted = 0, makeupTotalMonth = 0;
-
-      if (sid) {
-        const [attRes, repRes, mkSlotsRes, mkRes] = await Promise.all([
-          supabase.from('attendance').select('id', { count: 'exact' }).gte('timestamp', `${today}T00:00:00`).lte('timestamp', `${today}T23:59:59`).eq('type', 'arrival').eq('student_id', sid),
-          supabase.from('study_reports').select('homework_completed').eq('date', today).eq('student_id', sid),
-          supabase.from('makeup_slots').select('id').gte('date', monthStart).lte('date', monthEnd),
-          supabase.from('makeup_reservations').select('id, status, slot_id').eq('student_id', sid),
-        ]);
-        studentAttendance = attRes.count || 0;
-        studentReports = repRes.data || [];
-        const monthSlotIds = new Set((mkSlotsRes.data || []).map(s => s.id));
-        const monthMakeups = (mkRes.data || []).filter(r => monthSlotIds.has(r.slot_id));
-        makeupCompleted = monthMakeups.filter(r => r.status === 'completed').length;
-        makeupTotalMonth = monthMakeups.length;
-      }
-
-      setStats({
-        totalStudents: 0, homeworkDone: studentReports.filter(r => r.homework_completed).length,
-        homeworkNotDone: studentReports.filter(r => !r.homework_completed).length,
-        homeworkTotal: studentReports.length, todayPresent: studentAttendance, todayTotal: 1,
-        makeupPending: makeupTotalMonth, totalClasses: 0,
-        noticesRead: 0, noticesTotal: noticesRes.count || 0,
-        notificationsRead: 0, notificationsTotal: 0, reportsChecked: 0, reportsTotal: 0,
-        makeupCompleted, makeupTotalMonth,
-      });
-    } else if (isParent && childrenIds.length > 0) {
-      const [reportsRes, attendanceRes, noticesRes, notificationsRes, makeupAllRes, makeupSlotsRes] = await Promise.all([
-        supabase.from('study_reports').select('homework_completed, student_id').eq('date', today).in('student_id', childrenIds),
-        supabase.from('attendance').select('id', { count: 'exact' }).gte('timestamp', `${today}T00:00:00`).lte('timestamp', `${today}T23:59:59`).eq('type', 'arrival').in('student_id', childrenIds),
-        supabase.from('notices').select('id', { count: 'exact' }),
-        supabase.from('notifications').select('id, is_read').eq('user_id', user!.id),
-        supabase.from('makeup_reservations').select('id, status, slot_id').in('student_id', childrenIds),
-        supabase.from('makeup_slots').select('id, date').gte('date', monthStart).lte('date', monthEnd),
-      ]);
-
-      const reports = reportsRes.data || [];
-      const notifications = notificationsRes.data || [];
-      const notificationsRead = notifications.filter(n => n.is_read).length;
-      const monthSlotIds = new Set((makeupSlotsRes.data || []).map(s => s.id));
-      const monthMakeups = (makeupAllRes.data || []).filter(r => monthSlotIds.has(r.slot_id));
-      const makeupCompleted = monthMakeups.filter(r => r.status === 'completed').length;
-      const makeupTotalMonth = monthMakeups.length;
-
-      setChildrenTotal(childrenIds.length);
-      setStats({
-        totalStudents: 0,
-        homeworkDone: reports.filter(r => r.homework_completed).length,
-        homeworkNotDone: reports.filter(r => !r.homework_completed).length,
-        homeworkTotal: reports.length, todayPresent: attendanceRes.count || 0,
-        todayTotal: childrenIds.length, makeupPending: makeupTotalMonth, totalClasses: 0,
-        noticesRead: 0, noticesTotal: noticesRes.count || 0,
-        notificationsRead, notificationsTotal: notifications.length,
-        reportsChecked: 0, reportsTotal: reports.length, makeupCompleted, makeupTotalMonth,
-      });
-    } else if (isTeacher) {
-      // Teacher: filter by their own students/classes
-      const myStudentIds = await getTeacherStudentIds();
-      const hasStudents = myStudentIds.length > 0;
-
-      const [classesRes, makeupRes] = await Promise.all([
-        supabase.from('classes').select('id, teacher_ids'),
-        supabase.from('makeup_reservations').select('id', { count: 'exact' }).eq('status', 'reserved'),
-      ]);
-
-      const { data: teacherRow } = await supabase.from('teachers').select('id').eq('user_id', user!.id).single();
-      const myClassCount = teacherRow ? (classesRes.data || []).filter(c => (c.teacher_ids || []).includes(teacherRow.id)).length : 0;
-
-      let homeworkDone = 0, homeworkNotDone = 0, todayPresent = 0;
-      if (hasStudents) {
-        const [reportsRes, attendanceRes] = await Promise.all([
-          supabase.from('study_reports').select('homework_completed').eq('date', today).in('student_id', myStudentIds),
-          supabase.from('attendance').select('id', { count: 'exact' }).gte('timestamp', `${today}T00:00:00`).lte('timestamp', `${today}T23:59:59`).eq('type', 'arrival').in('student_id', myStudentIds),
-        ]);
-        const reports = reportsRes.data || [];
-        homeworkDone = reports.filter(r => r.homework_completed).length;
-        homeworkNotDone = reports.filter(r => !r.homework_completed).length;
-        todayPresent = attendanceRes.count || 0;
-      }
-
-      setStats({
-        totalStudents: myStudentIds.length,
-        homeworkDone,
-        homeworkNotDone,
-        homeworkTotal: homeworkDone + homeworkNotDone,
-        todayPresent,
-        todayTotal: myStudentIds.length,
-        makeupPending: makeupRes.count || 0,
-        totalClasses: myClassCount,
-        noticesRead: 0, noticesTotal: 0, notificationsRead: 0, notificationsTotal: 0,
-        reportsChecked: 0, reportsTotal: 0, makeupCompleted: 0, makeupTotalMonth: 0,
-      });
-    } else {
-      // Admin
-      const [studentsRes, allStudentsRes, reportsRes, attendanceRes, makeupRes, classesRes] = await Promise.all([
-        supabase.from('students').select('id', { count: 'exact' }).eq('status', '재원'),
-        supabase.from('students').select('id', { count: 'exact' }),
-        supabase.from('study_reports').select('homework_completed').eq('date', today),
-        supabase.from('attendance').select('id', { count: 'exact' }).gte('timestamp', `${today}T00:00:00`).eq('type', 'arrival'),
-        supabase.from('makeup_reservations').select('id', { count: 'exact' }).eq('status', 'reserved'),
-        supabase.from('classes').select('id', { count: 'exact' }),
-      ]);
-
-      const reports = reportsRes.data || [];
-      setStats({
-        totalStudents: allStudentsRes.count || 0,
-        homeworkDone: reports.filter(r => r.homework_completed).length,
-        homeworkNotDone: reports.filter(r => !r.homework_completed).length,
-        homeworkTotal: reports.length, todayPresent: attendanceRes.count || 0,
-        todayTotal: studentsRes.count || 0, makeupPending: makeupRes.count || 0,
-        totalClasses: classesRes.count || 0,
-        noticesRead: 0, noticesTotal: 0, notificationsRead: 0, notificationsTotal: 0,
-        reportsChecked: 0, reportsTotal: 0, makeupCompleted: 0, makeupTotalMonth: 0,
-      });
-    }
-  };
-
-  if (!user) return null;
-
-  const roleGreeting: Record<UserRole, string> = { admin: '관리자', teacher: '선생님', student: '학생', parent: '학부모' };
-  const formattedDate = format(currentDate, "yy년 M월 d일 (EEEE)", { locale: ko });
-
-  const unreadNotices = stats.noticesTotal - stats.noticesRead;
-  const unreadNotifications = stats.notificationsTotal - stats.notificationsRead;
-  const notArrivedToday = stats.todayTotal - stats.todayPresent;
-  const homeworkNotDoneCount = stats.homeworkTotal - stats.homeworkDone;
-  const reportsUnchecked = stats.reportsTotal - stats.reportsChecked;
-  const makeupIncomplete = stats.makeupTotalMonth - stats.makeupCompleted;
-
-  const parentStatCards = [
-    { title: '공지사항', icon: <FileText className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/notices',
-      details: [
-        { label: '전체', value: stats.noticesTotal, style: 'bold' as const },
-        { label: '확인', value: stats.noticesRead, style: 'normal' as const },
-        { label: '미확인', value: unreadNotices, style: 'alert' as const },
-      ] },
-    { title: '알림장', icon: <MessageSquare className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/notices',
-      details: [
-        { label: '전체', value: stats.notificationsTotal, style: 'bold' as const },
-        { label: '확인', value: stats.notificationsRead, style: 'normal' as const },
-        { label: '미확인', value: unreadNotifications, style: 'alert' as const },
-      ] },
-    { title: '오늘 출결', icon: <ClipboardList className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/attendance',
-      details: [
-        { label: '전체예정', value: stats.todayTotal, style: 'bold' as const },
-        { label: '등원완료', value: stats.todayPresent, style: 'normal' as const },
-        { label: '미등원', value: notArrivedToday, style: 'alert' as const },
-      ] },
-    { title: '숙제 완료', icon: <CheckCircle className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/homework',
-      details: [
-        { label: '전체숙제', value: stats.homeworkTotal, style: 'bold' as const },
-        { label: '완료', value: stats.homeworkDone, style: 'normal' as const },
-        { label: '미완료', value: homeworkNotDoneCount, style: 'alert' as const },
-      ] },
-    { title: '학습리포트', icon: <BookOpen className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/reports',
-      details: [
-        { label: '전체', value: stats.reportsTotal, style: 'bold' as const },
-        { label: '확인', value: stats.reportsChecked, style: 'normal' as const },
-        { label: '미확인', value: reportsUnchecked, style: 'alert' as const },
-      ] },
-    { title: '보강 현황', icon: <Calendar className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/makeup',
-      details: [
-        { label: '이번달예정', value: stats.makeupTotalMonth, style: 'bold' as const },
-        { label: '이수완료', value: stats.makeupCompleted, style: 'normal' as const },
-        { label: '미이수', value: makeupIncomplete, style: 'alert' as const },
-      ] },
-  ];
-
-  const studentStatCards = [
-    { title: '공지사항', icon: <FileText className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/notices',
-      details: [
-        { label: '전체', value: stats.noticesTotal, style: 'bold' as const },
-        { label: '확인', value: stats.noticesRead, style: 'normal' as const },
-        { label: '미확인', value: unreadNotices, style: 'alert' as const },
-      ] },
-    { title: '출결사항', icon: <ClipboardList className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/attendance',
-      details: [
-        { label: '오늘예정', value: stats.todayTotal, style: 'bold' as const },
-        { label: '등원완료', value: stats.todayPresent, style: 'normal' as const },
-        { label: '미등원', value: notArrivedToday, style: 'alert' as const },
-      ] },
-    { title: '숙제현황', icon: <CheckCircle className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/homework',
-      details: [
-        { label: '전체숙제', value: stats.homeworkTotal, style: 'bold' as const },
-        { label: '완료', value: stats.homeworkDone, style: 'normal' as const },
-        { label: '미완료', value: homeworkNotDoneCount, style: 'alert' as const },
-      ] },
-    { title: '보강현황', icon: <Calendar className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/makeup',
-      details: [
-        { label: '이번달예정', value: stats.makeupTotalMonth, style: 'bold' as const },
-        { label: '이수완료', value: stats.makeupCompleted, style: 'normal' as const },
-        { label: '미이수', value: makeupIncomplete, style: 'alert' as const },
-      ] },
-  ];
-
-  const defaultStatCards = [
-    { title: '전체 학생 수', value: `${stats.totalStudents}명`, icon: <Users className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/students' },
-    { title: '전체 반', value: `${stats.totalClasses}개`, icon: <GraduationCap className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/classes' },
-    { title: '숙제 완료', value: `${stats.homeworkDone}명`, icon: <CheckCircle className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/homework' },
-    { title: '숙제 미완료', value: `${stats.homeworkNotDone}명`, icon: <XCircle className="w-6 h-6" />, color: 'text-destructive', path: '/dashboard/homework' },
-    { title: '오늘 출결', value: `${stats.todayPresent}/${stats.todayTotal}`, icon: <ClipboardList className="w-6 h-6" />, color: 'text-primary', path: '/dashboard/attendance' },
-    { title: '보강 예정', value: `${stats.makeupPending}건`, icon: <Calendar className="w-6 h-6" />, color: 'hsl(var(--warning))', path: '/dashboard/makeup' },
-  ];
-
-  const showMultiChildDashboard = isParent && childrenIds.length >= 2 && childSummaries.length > 0;
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl lg:text-3xl">
-           {isTeacher
-            ? <><span className="font-bold">{user.name}</span>{' '}<span className="text-[0.9rem] lg:text-base font-normal">선생님</span>{' '}<span className="font-bold">안녕하세요</span> 😊</>
-            : isStudent
-              ? <><span className="font-bold">{user.name}</span>{' '}<span className="text-[0.9rem] lg:text-base font-normal">학생</span>{' '}<span className="font-bold">안녕</span> 👋</>
-              : isParent && childrenNames.length > 0
-                ? <><span className="font-bold">{childrenNames.join(', ')}</span>{' '}<span className="text-[0.9rem] lg:text-base font-normal">학부모님</span>{' '}<span className="font-bold">안녕하세요</span> 🙏</>
-                : <><span className="font-bold">{user.name}</span>{' '}<span className="text-[0.9rem] lg:text-base font-normal">{roleGreeting[user.role]}님</span>{' '}<span className="font-bold">안녕하세요</span> 👋</>}
-        </h2>
-        <p className="text-muted-foreground mt-1">
-          {isStudent ? supportMessage : isParent ? '오늘 자녀들의 학원현황을 확인하세요.' : '오늘의 학원 현황을 확인하세요.'}
-        </p>
-      </div>
-
-      {/* Date Navigation */}
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setCurrentDate(prev => subDays(prev, 1))}>
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-        <span className="text-sm font-medium text-foreground">{formattedDate}</span>
-        {format(currentDate, 'yyyy-MM-dd') < format(new Date(), 'yyyy-MM-dd') ? (
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setCurrentDate(prev => addDays(prev, 1))}>
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-        ) : (
-          <div className="h-8 w-8" />
-        )}
-      </div>
-
-      {/* Multi-child integrated dashboard for parents */}
-      {showMultiChildDashboard && (
-        <div className="space-y-3">
-          <h3 className="text-lg font-semibold">자녀별 현황</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {childSummaries.map(child => (
-              <Card key={child.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-4">
-                  <h4 className="font-bold text-base mb-3">{child.name}</h4>
-                  <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                    <div className="p-2 rounded-lg bg-muted">
-                      <p className="text-muted-foreground">출결</p>
-                      <p className={`font-bold text-sm ${child.todayPresent > 0 ? 'text-primary' : 'text-destructive'}`}>
-                        {child.todayPresent > 0 ? '등원' : '미등원'}
-                      </p>
-                    </div>
-                    <div className="p-2 rounded-lg bg-muted">
-                      <p className="text-muted-foreground">숙제</p>
-                      <p className={`font-bold text-sm ${child.homeworkDone === child.homeworkTotal && child.homeworkTotal > 0 ? 'text-primary' : child.homeworkTotal > 0 ? 'text-destructive' : 'text-foreground'}`}>
-                        {child.homeworkTotal > 0 ? `${child.homeworkDone}/${child.homeworkTotal}` : '-'}
-                      </p>
-                    </div>
-                    <div className="p-2 rounded-lg bg-muted">
-                      <p className="text-muted-foreground">보강</p>
-                      <p className="font-bold text-sm">{child.makeupCount}건</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+    <aside id="mobile-menu" class="fixed md:relative inset-y-0 left-0 w-64 bg-white border-r border-slate-100 flex flex-col z-[70] -translate-x-full md:translate-x-0">
+        <div class="p-6 hidden md:flex items-center justify-between">
+            <h1 class="text-2xl font-black text-emerald-600 flex items-center gap-2">
+                <img src="../logo.png" alt="M" class="w-8 h-8 object-contain">
+                더엠수학
+            </h1>
         </div>
-      )}
-
-      {/* Stat Cards */}
-      <div className={`grid ${isParent || isStudent ? 'grid-cols-2 lg:grid-cols-2' : 'grid-cols-2 lg:grid-cols-3'} gap-3 lg:gap-4`}>
-        {/* Teacher: add study report card as one of the stat cards */}
-        {isTeacher && (
-          <motion.div
-            key="study-report-card"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0 }}
-          >
-            <Card
-              className="hover:shadow-md transition-shadow cursor-pointer group"
-              onClick={() => setReportDialogOpen(true)}
-            >
-              <CardContent className="p-4 lg:p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-primary"><FileEdit className="w-6 h-6" /></span>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <p className="text-2xl lg:text-3xl font-bold">수업일지</p>
-                <p className="text-sm text-muted-foreground mt-1">작성하기</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-        {(isParent || isStudent) ? (isStudent ? studentStatCards : parentStatCards).map((stat, i) => (
-          <motion.div
-            key={stat.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <Card
-              className="hover:shadow-md transition-shadow cursor-pointer group"
-              onClick={() => navigate(stat.path)}
-            >
-              <CardContent className="p-4 lg:p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex flex-col gap-2 shrink-0 w-[40%]">
-                    <span className={stat.color}>{stat.icon}</span>
-                    <p className="text-sm font-semibold text-foreground whitespace-nowrap">{stat.title}</p>
-                  </div>
-                  <div className="flex flex-col items-end gap-1.5 text-xs w-[60%]">
-                    {stat.details.map((d) => (
-                      <span
-                        key={d.label}
-                        className={
-                          d.style === 'bold'
-                            ? 'font-bold text-foreground whitespace-nowrap'
-                            : d.style === 'alert' && d.value > 0
-                              ? 'font-bold text-destructive whitespace-nowrap'
-                              : 'font-normal text-foreground whitespace-nowrap'
-                        }
-                      >
-                        {d.label}: {d.value}건
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )) : defaultStatCards.map((stat, i) => (
-          <motion.div
-            key={stat.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <Card
-              className="hover:shadow-md transition-shadow cursor-pointer group"
-              onClick={() => navigate(stat.path)}
-            >
-              <CardContent className="p-4 lg:p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className={stat.color}>{stat.icon}</span>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <p className="text-2xl lg:text-3xl font-bold">{stat.value}</p>
-                <p className="text-sm text-muted-foreground mt-1">{stat.title}</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Teacher Study Report Card - same size as stat cards */}
-      {isTeacher && (
-        <TeacherStudyReportCard open={reportDialogOpen} onOpenChange={setReportDialogOpen} />
-      )}
+        
+<nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
+    <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Dashboard</div>
+    <a href="./admin_main.html" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm mb-2">Home</a>
+    
+    <div class="space-y-0.5">
+        <a href="../students/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황
+        </a>
+        <a href="../classes/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황
+        </a>
+        <a href="../homework/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-book-open w-5 text-center"></i> 숙제현황
+        </a>
+        <a href="../stickers/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-star w-5 text-center"></i> 굿티커현황
+        </a>
+        <a href="../attendance/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-user-check w-5 text-center"></i> 출결현황
+        </a>
+        <a href="../makeup/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> 보강현황
+        </a>
+        <a href="../journals/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-calendar-check w-5 text-center"></i> 수업일지
+        </a>
+        <a href="../notices/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항
+        </a>
+        <a href="../reports/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트
+        </a>
     </div>
-  );
-}
+
+    <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Management</div>
+    <div class="space-y-0.5">
+        <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+            <i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경
+        </a>
+    </div>
+</nav>
+        
+    </aside>
+
+    <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
+
+<main class="flex-1 p-5 md:p-12 w-full max-w-7xl mx-auto">
+    <div class="mb-8 mt-2 md:mt-0 text-center md:text-left">
+        <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
+            김주호 <span class="text-base md:text-xl font-medium text-slate-500">원장님</span> 안녕하세요! 😄
+        </h2>
+        <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium italic">"현명한 관리, 더엠수학!"</p>
+    </div>
+
+    <div class="stat-card-grid">
+        <a href="../students/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-group text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학생현황</span>
+            <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">4명</span>
+        </a>
+
+        <a href="../classes/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-layer-group text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">반현황</span>
+            <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">15개</span>
+        </a>
+
+        <a href="../homework/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-book-open text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">숙제현황</span>
+            <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">3 <span class="text-rose-500 text-xs font-bold">미1</span></span>
+        </a>
+
+        <a href="../stickers/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-star text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">굿티커</span>
+            <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">128</span>
+        </a>
+
+        <a href="../attendance/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-check text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">출결현황</span>
+            <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">0/4</span>
+        </a>
+
+        <a href="../makeup/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-clock-rotate-left text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">보강현황</span>
+            <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">2건</span>
+        </a>
+
+        <a href="../journals/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-calendar-check text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">수업일지</span>
+            <span class="text-lg font-black text-slate-800 mt-1">작성</span>
+        </a>
+
+        <a href="../notices/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-bullhorn text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">공지사항</span>
+            <span class="text-lg font-black text-slate-800 mt-1">5건</span>
+        </a>
+
+        <a href="../reports/index.html" class="fixed-card">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-chart-line text-lg"></i></div>
+            <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학습리포트</span>
+            <span class="text-lg font-black text-slate-800 mt-1">보기</span>
+        </a>
+    </div>
+</main>
+    
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('menu-open');
+            menuOverlay.classList.toggle('hidden');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+    </script>
+</body>
+</html>
