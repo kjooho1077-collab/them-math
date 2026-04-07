@@ -18,13 +18,13 @@
         /* 카드 그리드 설정 */
         .stat-card-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 모바일: 3열 */
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             justify-content: start;
         }
         @media (min-width: 1024px) {
             .stat-card-grid {
-                grid-template-columns: repeat(5, 180px); /* PC: 5열 고정 */
+                grid-template-columns: repeat(5, 180px);
                 gap: 20px;
             }
         }
@@ -95,6 +95,13 @@
                 </a>
             </div>
         </nav>
+        
+        <div class="p-4 border-t border-slate-100">
+            <a href="../index.html" class="flex items-center justify-center gap-2 px-4 py-3 bg-rose-50 text-rose-600 rounded-xl font-bold text-sm hover:bg-rose-100 transition-colors">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                로그아웃
+            </a>
+        </div>
     </aside>
 
     <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
