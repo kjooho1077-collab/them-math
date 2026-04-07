@@ -11,21 +11,19 @@
         * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
 
-        /* 모바일 메뉴 애니메이션 */
         #mobile-menu { transition: transform 0.3s ease-in-out; }
         .menu-open { transform: translateX(0) !important; }
 
-        /* 카드 그리드 설정 */
         .stat-card-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 모바일: 3열 */
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             justify-content: start;
         }
 
         @media (min-width: 1024px) {
             .stat-card-grid {
-                grid-template-columns: repeat(5, 180px); /* PC: 5열 고정 */
+                grid-template-columns: repeat(5, 180px);
                 gap: 20px;
             }
         }
@@ -76,7 +74,7 @@
             <a href="#" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm mb-2">Home</a>
             
             <div class="space-y-0.5">
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 자녀현황</a>
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5 text-center"></i> 숙제현황</a>
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5 text-center"></i> 굿티커현황</a>
                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5 text-center"></i> 출결현황</a>
@@ -108,38 +106,38 @@
             <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium italic">"현명한 관리, 더엠수학!"</p>
         </div>
 
-        <div class="stat-card-grid">
-            <div class="fixed-card">
+        <div class="stat-card-grid" id="stat-container">
+            <div class="fixed-card child-only">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-group text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학생현황</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">4명</span>
+                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">자녀현황</span>
+                <span id="child-count" class="text-lg md:text-2xl font-black text-slate-800 mt-1">0명</span>
             </div>
-            <div class="fixed-card">
+            <div class="fixed-card child-only">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-book-open text-lg"></i></div>
                 <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">숙제현황</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">3 <span class="text-rose-500 text-xs font-bold">미1</span></span>
+                <span id="homework-stat" class="text-lg md:text-2xl font-black text-slate-800 mt-1">-</span>
             </div>
-            <div class="fixed-card">
+            <div class="fixed-card child-only">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-star text-lg"></i></div>
                 <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">굿티커</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">128</span>
+                <span id="sticker-count" class="text-lg md:text-2xl font-black text-slate-800 mt-1">0</span>
             </div>
-            <div class="fixed-card">
+            <div class="fixed-card child-only">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-check text-lg"></i></div>
                 <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">출결현황</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">0/4</span>
+                <span id="attendance-stat" class="text-lg md:text-2xl font-black text-slate-800 mt-1">-</span>
             </div>
-            <div class="fixed-card">
+            <div class="fixed-card child-only">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-clock-rotate-left text-lg"></i></div>
                 <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">보강현황</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">2건</span>
+                <span id="makeup-stat" class="text-lg md:text-2xl font-black text-slate-800 mt-1">0건</span>
             </div>
             <div class="fixed-card">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-bullhorn text-lg"></i></div>
                 <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">공지사항</span>
                 <span class="text-lg font-black text-slate-800 mt-1">5건</span>
             </div>
-            <div class="fixed-card">
+            <div class="fixed-card child-only">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-chart-line text-lg"></i></div>
                 <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학습리포트</span>
                 <span class="text-lg font-black text-slate-800 mt-1">보기</span>
@@ -159,6 +157,31 @@
 
         menuToggle.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
+
+        /* 자녀 필터링 로직 (더미 데이터 예시) */
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 현재 로그인한 부모님의 전화번호 (실제 구현시 세션/로컬스토리지에서 가져옴)
+            const parentPhone = "010-1234-5678"; 
+
+            // 2. 전체 학생 데이터 예시 (학생정보에 부모님 전화번호 포함)
+            const allStudents = [
+                { name: "김철수", parentContact: "010-1234-5678", stickers: 15, homework: "완료", attendance: "등원" },
+                { name: "이영희", parentContact: "010-9999-8888", stickers: 20, homework: "미흡", attendance: "미등원" }
+            ];
+
+            // 3. 내 자녀만 필터링
+            const myChildren = allStudents.filter(student => student.parentContact === parentPhone);
+
+            // 4. 화면 반영
+            if(myChildren.length > 0) {
+                document.getElementById('child-count').innerText = `${myChildren.length}명`;
+                document.getElementById('sticker-count').innerText = myChildren.reduce((acc, curr) => acc + curr.stickers, 0);
+                document.getElementById('homework-stat').innerText = myChildren[0].homework;
+                document.getElementById('attendance-stat').innerText = myChildren[0].attendance;
+            } else {
+                document.getElementById('child-count').innerText = "0명";
+            }
+        });
     </script>
 </body>
 </html>
