@@ -4,34 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>더엠수학 | 로그인</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
+        /* 원장님 요청 민트색 배경 및 정자체 설정 */
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #e3f7f2; margin: 0; }
-        #login-page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 4rem; }
-        .login-card { background: white; width: 320px; padding: 2.5rem 2rem; border-radius: 2.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; }
+        
+        #login-page { 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 4rem; /* 모바일에서 살짝 아래로 배치 */
+        }
+
+        /* 슬림한 320px 로그인 박스 */
+        .login-card {
+            background: white;
+            width: 320px;
+            padding: 2.5rem 2rem;
+            border-radius: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
         #error-msg { display: none; color: #ef4444; font-size: 12px; font-weight: bold; margin-top: 1rem; }
     </style>
 </head>
 <body>
+
     <div id="login-page">
         <div class="flex items-center gap-3 mb-8">
             <img src="logo.png" alt="로고" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/50?text=M'">
             <h1 class="text-4xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
         </div>
+        
         <div class="login-card">
             <p style="font-style: normal !important;" class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
+            
             <form id="login-form" class="space-y-4 text-left">
-                <input type="text" id="user-id" placeholder="아이디" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm">
-                <div class="relative">
-                    <input type="password" id="pw-input" placeholder="비밀번호" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm">
-                    <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer"></i>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">ID</label>
+                    <input type="text" id="user-id" placeholder="아이디를 입력하세요" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
                 </div>
-                <p id="error-msg"><i class="fa-solid fa-circle-exclamation"></i> 정보가 틀렸습니다.</p>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">Password</label>
+                    <div class="relative">
+                        <input type="password" id="pw-input" placeholder="비밀번호" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
+                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500 transition"></i>
+                    </div>
+                </div>
+                
+                <p id="error-msg"><i class="fa-solid fa-circle-exclamation"></i> 정보가 올바르지 않습니다.</p>
+                
                 <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest mt-4 shadow-lg active:scale-95 transition">로그인하기</button>
             </form>
+
+            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-100">비밀번호를 잊으셨나요?</button>
         </div>
+        
         <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase italic">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
 
@@ -39,18 +74,25 @@
         const pwInput = document.getElementById('pw-input');
         const pwToggle = document.getElementById('pw-toggle');
 
+        // 눈동자 토글
         pwToggle.addEventListener('click', () => {
-            pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
-            pwToggle.classList.toggle('fa-eye-slash');
+            if (pwInput.type === 'password') {
+                pwInput.type = 'text';
+                pwToggle.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                pwInput.type = 'password';
+                pwToggle.classList.replace('fa-eye-slash', 'fa-eye');
+            }
         });
 
+        // 로그인 로직
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const id = document.getElementById('user-id').value;
             const pw = pwInput.value;
 
             if (id === 'admin' && pw === '1234') {
-                // 성공 시 admin.html로 이동!
+                // 성공 시 admin.html 파일로 이동
                 location.href = 'admin.html';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
