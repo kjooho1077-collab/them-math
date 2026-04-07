@@ -3,130 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>더엠수학 관리 시스템</title>
-    
+    <title>더엠수학 | 로그인</title>
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <style>
-        /* 새로고침(당기기)이 가능하도록 overflow: hidden 제거 */
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; margin: 0; }
-
-        /* 모바일 로그인 페이지 레이아웃 */
-        #login-page { 
-            background-color: #e3f7f2; 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* [수정] 위로 치우치지 않게 중앙보다 살짝 아래로 배치하기 위해 상단 여백(padding-top) 추가 */
-            justify-content: center;
-            padding-top: 2rem; 
-            z-index: 100;
-        }
-
-        /* 로그인 박스 (320px 슬림 버전 유지) */
-        .login-card {
-            background: white;
-            width: 320px;
-            padding: 2.5rem 2rem;
-            border-radius: 2.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        /* PC 레이아웃 (반응형 유지) */
-        @media (min-width: 1024px) {
-            body { display: flex; height: 100vh; overflow: hidden; }
-            .sidebar { width: 260px; background: white; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; flex-shrink: 0; }
-            .main-content { flex: 1; overflow-y: auto; display: block; background-color: #f8fafc; }
-            #login-page { position: absolute; inset: 0; padding-top: 0; }
-        }
-
-        @media (max-width: 1023px) {
-            .sidebar, .main-content { display: none; }
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #e3f7f2; margin: 0; }
+        #login-page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 4rem; }
+        .login-card { background: white; width: 320px; padding: 2.5rem 2rem; border-radius: 2.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; }
+        #error-msg { display: none; color: #ef4444; font-size: 12px; font-weight: bold; margin-top: 1rem; }
     </style>
 </head>
 <body>
-
     <div id="login-page">
         <div class="flex items-center gap-3 mb-8">
             <img src="logo.png" alt="로고" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/50?text=M'">
             <h1 class="text-4xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
         </div>
-        
         <div class="login-card">
             <p style="font-style: normal !important;" class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
-            
             <form id="login-form" class="space-y-4 text-left">
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">ID</label>
-                    <input type="text" value="admin" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500">
+                <input type="text" id="user-id" placeholder="아이디" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm">
+                <div class="relative">
+                    <input type="password" id="pw-input" placeholder="비밀번호" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm">
+                    <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer"></i>
                 </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">Password</label>
-                    <div class="relative">
-                        <input type="password" id="pw-input" value="1234" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500">
-                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer"></i>
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest mt-4 shadow-lg">로그인하기</button>
+                <p id="error-msg"><i class="fa-solid fa-circle-exclamation"></i> 정보가 틀렸습니다.</p>
+                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest mt-4 shadow-lg active:scale-95 transition">로그인하기</button>
             </form>
-
-            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-100">비밀번호를 잊으셨나요?</button>
         </div>
-
         <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase italic">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
-
-    <aside class="sidebar">
-        <div class="p-6 text-2xl font-black text-emerald-600 tracking-tighter flex items-center gap-2">
-            <img src="logo.png" alt="로고" class="w-6 h-6 object-contain">
-            <span>더엠<span class="text-blue-600">수학</span></span>
-        </div>
-        <nav class="flex-1 p-4 space-y-1">
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm">
-                <i class="fa-solid fa-house"></i> 대시보드
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl text-sm font-bold">
-                <i class="fa-solid fa-user-graduate"></i> 학생관리
-            </a>
-        </nav>
-    </aside>
-
-    <main class="main-content">
-        <header class="h-14 bg-white border-b border-slate-100 flex items-center px-8 text-[10px] font-bold text-slate-300 tracking-widest uppercase italic">
-            THE M MATH MANAGEMENT SYSTEM
-        </header>
-        <div class="p-8">
-            <h2 class="text-3xl font-black text-slate-800">원장님, 화면 수정이 완료되었습니다! 🫡</h2>
-            <p class="text-slate-400 mt-2 font-medium">모바일 정렬 조정 및 새로고침 기능을 활성화했습니다.</p>
-        </div>
-    </main>
 
     <script>
         const pwInput = document.getElementById('pw-input');
         const pwToggle = document.getElementById('pw-toggle');
-        const loginPage = document.getElementById('login-page');
 
-        pwToggle.addEventListener('click', function() {
-            if (pwInput.type === 'password') {
-                pwInput.type = 'text';
-                this.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                pwInput.type = 'password';
-                this.classList.replace('fa-eye-slash', 'fa-eye');
-            }
+        pwToggle.addEventListener('click', () => {
+            pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+            pwToggle.classList.toggle('fa-eye-slash');
         });
 
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            if (window.innerWidth >= 1024) {
-                loginPage.style.display = 'none';
+            const id = document.getElementById('user-id').value;
+            const pw = pwInput.value;
+
+            if (id === 'admin' && pw === '1234') {
+                // 성공 시 admin.html로 이동!
+                location.href = 'admin.html';
             } else {
-                alert('로그인되었습니다!');
+                document.getElementById('error-msg').style.display = 'block';
             }
         });
     </script>
