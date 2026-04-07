@@ -89,8 +89,8 @@
         </div>
     </div>
 
-    <script>
-    // 1. HTML 요소 연결 (원장님 사진 속 ID와 정확히 일치시킴)
+   <script>
+    // 1. HTML 요소 연결
     const loginForm = document.getElementById('login-form');
     const idInput = document.getElementById('user-id');
     const passwordInput = document.getElementById('password_input');
@@ -98,7 +98,7 @@
     const togglePasswordButton = document.getElementById('toggle_password');
     const eyeIcon = document.getElementById('eye_icon');
 
-    // 2. 비밀번호 눈 모양 아이콘 토글 (보이기/숨기기)
+    // 2. 비밀번호 눈 모양 아이콘 토글
     if (togglePasswordButton) {
         togglePasswordButton.addEventListener('click', function () {
             const isPassword = passwordInput.getAttribute('type') === 'password';
@@ -108,38 +108,34 @@
         });
     }
 
-    // 3. [메인 로직] 로그인 버튼 클릭 시 실행되는 구간
+    // 3. [핵심] 로그인 처리 (더 부드럽게 작동하도록 보강)
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // 페이지가 새로고침되는 것을 막습니다.
+            e.preventDefault(); 
 
-            // 입력한 아이디와 비밀번호 가져오기 (양끝 공백 제거)
-            const id = idInput.value.trim();
+            // 입력값 가져오기 (양끝 공백 제거 및 소문자로 변환)
+            const id = idInput.value.trim().toLowerCase(); 
             const pw = passwordInput.value.trim();
 
-            // --- 아이디별 접속 경로 설정 ---
+            // 에러 메시지 초기화
+            errorMsg.classList.add('hidden');
 
-            // [1] 원장님 (admin)
+            // --- 아이디별 접속 경로 ---
             if (id === 'admin' && pw === '1234') {
-                location.href = 'users/admin_main.html';
+                window.location.replace('users/admin_main.html'); // .replace가 더 확실하게 이동합니다
             } 
-            // [2] 선생님 (teacher)
             else if (id === 'teacher' && pw === '1234') {
-                location.href = 'users/teacher_main.html';
+                window.location.replace('users/teacher_main.html');
             } 
-            // [3] 학생 (student)
             else if (id === 'student' && pw === '1234') {
-                location.href = 'users/student_main.html';
+                window.location.replace('users/student_main.html');
             } 
-            // [4] 학부모 (parent)
             else if (id === 'parent' && pw === '1234') {
-                location.href = 'users/parent_main.html';
+                window.location.replace('users/parent_main.html');
             } 
-            // [!] 그 외 (로그인 실패)
             else {
-                if (errorMsg) {
-                    errorMsg.classList.remove('hidden'); // 에러 메시지 보여주기
-                }
+                // 실패 시
+                errorMsg.classList.remove('hidden');
             }
         });
     }
