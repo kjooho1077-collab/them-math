@@ -11,38 +11,37 @@
         * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; }
 
-        /* 모바일 메뉴 애니메이션을 위한 설정 */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-        }
-        .menu-open {
-            transform: translateX(0) !important;
-        }
+        /* 메뉴 애니메이션 */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .menu-open { transform: translateX(0) !important; }
 
+        /* 카드 그리드: 무조건 한 줄에 3개, 좌측 정렬 */
         .stat-card-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); 
+            grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
             gap: 12px;
+            justify-content: start; /* 좌측 정렬 */
         }
 
-        @media (min-width: 768px) {
-            .stat-card-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        }
-
+        /* PC 버전 그리드 조절 (너무 커지지 않게 최대 너비 제한) */
         @media (min-width: 1024px) {
-            .stat-card-grid { grid-template-columns: repeat(5, 1fr); }
+            .stat-card-grid {
+                grid-template-columns: repeat(3, 200px); /* PC에서도 3열 유지, 크기 고정 */
+                gap: 20px;
+            }
         }
 
         .fixed-card {
             background-color: white;
             border-radius: 1.5rem;
             border: 1px solid #f1f5f9;
-            aspect-ratio: 1 / 1;
+            padding: 20px 10px; /* 정사각형 해제: 상하 여백으로 높이 조절 */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
         .fixed-card:active { transform: scale(0.95); }
     </style>
@@ -54,7 +53,7 @@
             <img src="../logo.png" alt="M" class="w-7 h-7 object-contain" onerror="this.src='https://via.placeholder.com/40?text=M'">
             더엠수학
         </h1>
-        <button id="menu-toggle" class="p-2 text-slate-500 hover:text-emerald-500 transition-colors">
+        <button id="menu-toggle" class="p-2 text-slate-500">
             <i class="fa-solid fa-bars text-2xl"></i>
         </button>
     </header>
@@ -67,18 +66,30 @@
             </h1>
         </div>
         
-        <nav class="flex-1 flex flex-col p-4 space-y-1 overflow-y-auto">
+        <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto">
             <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Dashboard</div>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm">Home</a>
+            <a href="#" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm mb-2">Home</a>
+            
             <div class="space-y-0.5">
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-group w-5"></i> 학생현황</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5"></i> 반현황</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5"></i> 숙제현황</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5"></i> 굿티커현황</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5"></i> 출결현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-group w-5"></i> 학생현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5"></i> 반현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5"></i> 숙제현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5"></i> 굿티커현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5"></i> 출결현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-clock-rotate-left w-5"></i> 보강현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-calendar-check w-5"></i> 수업일지</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-bullhorn w-5"></i> 공지사항</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5"></i> 학습리포트</a>
+            </div>
+
+            <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Management</div>
+            <div class="space-y-0.5">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5"></i> 학생관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chalkboard-user w-5"></i> 반관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-gear w-5"></i> 선생님관리</a>
             </div>
             
-            <div class="mt-auto p-4">
+            <div class="mt-8 pb-4">
                 <a href="../index.html" class="flex items-center gap-3 px-4 py-3 text-rose-500 bg-rose-50 rounded-2xl text-sm font-bold justify-center">
                     <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
                 </a>
@@ -88,34 +99,59 @@
 
     <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
 
-    <main class="flex-1 p-5 md:p-12 max-w-7xl mx-auto w-full">
+    <main class="flex-1 p-5 md:p-12 w-full">
         <div class="mb-8">
             <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
                 김주호 <span class="text-base md:text-xl font-medium text-slate-500">원장님</span> 😄
             </h2>
-            <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium">관리자 대시보드입니다.</p>
+            <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium">실시간 학원 현황입니다.</p>
         </div>
 
         <div class="stat-card-grid">
             <div class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-group text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400">학생현황</span>
-                <span class="text-xl md:text-2xl font-black text-slate-800 mt-1">4명</span>
+                <div class="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-group"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">학생현황</span>
+                <span class="text-lg font-black text-slate-800 mt-1">4명</span>
             </div>
             <div class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-layer-group text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400">반현황</span>
-                <span class="text-xl md:text-2xl font-black text-slate-800 mt-1">15개</span>
+                <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-layer-group"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">반현황</span>
+                <span class="text-lg font-black text-slate-800 mt-1">15개</span>
             </div>
             <div class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-book-open text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400">숙제현황</span>
-                <span class="text-xl md:text-2xl font-black text-slate-800 mt-1">3개</span>
+                <div class="w-10 h-10 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-book-open"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">숙제현황</span>
+                <span class="text-lg font-black text-slate-800 mt-1">3 <span class="text-rose-500 text-xs">미1</span></span>
             </div>
             <div class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-star text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400">굿티커</span>
-                <span class="text-xl md:text-2xl font-black text-slate-800 mt-1">128</span>
+                <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-star"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">굿티커</span>
+                <span class="text-lg font-black text-slate-800 mt-1">128</span>
+            </div>
+            <div class="fixed-card">
+                <div class="w-10 h-10 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-check"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">출결현황</span>
+                <span class="text-lg font-black text-slate-800 mt-1">0/4</span>
+            </div>
+            <div class="fixed-card">
+                <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">보강현황</span>
+                <span class="text-lg font-black text-slate-800 mt-1">2건</span>
+            </div>
+            <div class="fixed-card">
+                <div class="w-10 h-10 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-calendar-check"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">수업일지</span>
+                <span class="text-lg font-black text-slate-800 mt-1">작성</span>
+            </div>
+            <div class="fixed-card">
+                <div class="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-bullhorn"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">공지사항</span>
+                <span class="text-lg font-black text-slate-800 mt-1">5건</span>
+            </div>
+            <div class="fixed-card">
+                <div class="w-10 h-10 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-chart-line"></i></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">학습리포트</span>
+                <span class="text-lg font-black text-slate-800 mt-1">보기</span>
             </div>
         </div>
     </main>
@@ -125,16 +161,13 @@
         const mobileMenu = document.getElementById('mobile-menu');
         const menuOverlay = document.getElementById('menu-overlay');
 
-        // 메뉴 열기/닫기 함수
         function toggleMenu() {
             mobileMenu.classList.toggle('menu-open');
             menuOverlay.classList.toggle('hidden');
-            // 메뉴 열렸을 때 본문 스크롤 막기
-            document.body.style.overflow = mobileMenu.classList.contains('menu-open') ? 'hidden' : '';
         }
 
         menuToggle.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu); // 배경 누르면 닫기
+        menuOverlay.addEventListener('click', toggleMenu);
     </script>
 
 </body>
