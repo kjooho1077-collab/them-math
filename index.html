@@ -4,29 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더엠수학 관리 시스템</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; overflow: hidden; margin: 0; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .sidebar { width: 260px; height: 100vh; background: white; border-right: 1px solid #f1f5f9; flex-shrink: 0; }
-        .main-content { flex: 1; height: 100vh; overflow-y: auto; }
     </style>
 </head>
-<body class="flex">
+<body class="flex items-center justify-center h-screen bg-[#e3f7f2]">
 
-    <div id="login-page" class="absolute inset-0 bg-[#e3f7f2] flex flex-col items-center justify-center z-50 p-6 overflow-y-auto no-scrollbar">
+    <div id="login-page" class="flex flex-col items-center p-6 w-full max-w-[420px]">
         
         <div class="flex items-center gap-4 mb-10">
-            <img src="logo.jpg" alt="더엠수학 로고" class="w-14 h-14 object-contain" onerror="this.src='https://via.placeholder.com/60?text=더엠로고'">
+            <img src="logo.png" alt="더엠수학 로고" class="w-14 h-14 object-contain" onerror="this.src='https://via.placeholder.com/60?text=더엠로고'">
             <h1 class="text-5xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
         </div>
         
-        <div class="bg-white p-12 rounded-[2.5rem] shadow-xl w-[420px] text-center border border-slate-100 flex-shrink-0">
-            <p class="text-slate-500 mb-10 text-base font-bold whitespace-nowrap">안녕하세요. 더엠수학학원입니다.</p>
+        <div class="bg-white p-12 rounded-[2.5rem] shadow-xl w-full text-center border border-slate-100">
+            <p class="text-slate-500 mb-10 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
             
             <form id="login-form" class="space-y-6 text-left">
                 <div>
@@ -49,43 +45,8 @@
         <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
 
-    <aside class="sidebar flex flex-col">
-        <div class="p-6 text-2xl font-black text-emerald-600 tracking-tight flex items-center gap-2">
-            <img src="logo.jpg" alt="로고" class="w-6 h-6 object-contain" onerror="this.src='https://via.placeholder.com/24?text=L'">
-            <span>더엠<span class="text-blue-600">수학</span></span>
-        </div>
-        <nav class="flex-1 p-4 space-y-1 overflow-y-auto no-scrollbar">
-            <div class="text-[10px] font-bold text-slate-300 px-4 mb-2 uppercase tracking-widest italic">Dashboard</div>
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm"><i class="fa-solid fa-house"></i> Home</a>
-            
-            <div class="pt-6 text-[10px] font-bold text-slate-300 px-4 mb-2 uppercase tracking-widest italic">Management</div>
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl text-sm font-bold"><i class="fa-solid fa-user-graduate"></i> 학생관리</a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-rose-500 hover:bg-rose-50 rounded-xl text-sm font-bold"><i class="fa-solid fa-clock-rotate-left"></i> 누적지각관리</a>
-        </nav>
-        
-        <div class="p-4 border-t border-slate-50">
-            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl">
-                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white font-bold">원</div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm font-black text-slate-800">김주호 원장님</p>
-                    <button class="text-[10px] text-rose-500 font-bold">로그아웃</button>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <main class="main-content">
-        <header class="h-14 bg-white border-b border-slate-50 flex items-center px-8 text-[10px] font-bold text-slate-300 tracking-widest uppercase italic">
-            THE M MATH MANAGEMENT SYSTEM
-        </header>
-        <div id="main-display" class="p-8">
-            <h2 class="text-3xl font-black text-slate-800">안녕하세요, 원장님! 👋</h2>
-            <p class="text-slate-400 mt-2">좌측 메뉴를 선택하여 학생 정보를 관리해 보세요.</p>
-        </div>
-    </main>
-
     <script>
-        // 비밀번호 눈동자 토글 기능
+        // 비밀번호 토글 자바스크립트
         const pwInput = document.getElementById('pw-input');
         const pwToggle = document.getElementById('pw-toggle');
 
@@ -97,12 +58,6 @@
                 pwInput.type = 'password';
                 this.classList.replace('fa-eye-slash', 'fa-eye');
             }
-        });
-
-        // 로그인 버튼 클릭 시 대문 가리기
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.getElementById('login-page').style.display = 'none';
         });
     </script>
 </body>
