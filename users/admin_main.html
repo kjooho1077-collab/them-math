@@ -38,7 +38,7 @@
             transition: all 0.2s ease-in-out;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             cursor: pointer;
-            text-decoration: none; /* 링크 밑줄 제거 */
+            text-decoration: none;
         }
         @media (min-width: 1024px) {
             .fixed-card { width: 180px; height: 180px; padding: 20px; }
@@ -50,9 +50,7 @@
 <body class="flex flex-col md:flex-row min-h-screen relative overflow-x-hidden">
     
     <header class="md:hidden bg-white border-b border-slate-100 p-4 flex items-center justify-between sticky top-0 z-[60]">
-        <h1 class="text-xl font-black text-emerald-600 flex items-center gap-2">
-            더엠수학
-        </h1>
+        <h1 class="text-xl font-black text-emerald-600 flex items-center gap-2">더엠수학</h1>
         <button id="menu-toggle" class="p-2 text-slate-500">
             <i class="fa-solid fa-bars text-2xl"></i>
         </button>
@@ -60,7 +58,7 @@
 
     <aside id="mobile-menu" class="fixed md:relative inset-y-0 left-0 w-64 bg-white border-r border-slate-100 flex flex-col z-[70] -translate-x-full md:translate-x-0">
         <div class="p-6 hidden md:flex items-center justify-between">
-            <h1 class="text-2xl font-black text-emerald-600 flex items-center gap-2">더엠수학</h1>
+            <h1 class="text-2xl font-black text-emerald-600">더엠수학</h1>
         </div>
         
         <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
@@ -78,10 +76,13 @@
                 <a href="../reports/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트</a>
             </div>
 
-            <div class="pt-6 space-y-0.5">
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
-                    <i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경
-                </a>
+            <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Management</div>
+            <div class="space-y-0.5">
+                <a href="../manage/students.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
+                <a href="../manage/classes.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 반관리</a>
+                <a href="../manage/teachers.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-gear w-5 text-center"></i> 선생님관리</a>
+                <a href="../manage/settings.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-gear w-5 text-center"></i> 설정</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경</a>
             </div>
         </nav>
     </aside>
@@ -93,7 +94,6 @@
             <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
                 김주호 <span class="text-base md:text-xl font-medium text-slate-500">원장님</span> 안녕하세요! 😄
             </h2>
-            <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium italic">"현명한 관리, 더엠수학!"</p>
         </div>
 
         <div class="stat-card-grid">
@@ -123,53 +123,3 @@
 
             <a href="../attendance/index.html" class="fixed-card">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-user-check text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">출결현황</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">0/4</span>
-            </a>
-
-            <a href="../makeup/index.html" class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-clock-rotate-left text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">보강현황</span>
-                <span class="text-lg md:text-2xl font-black text-slate-800 mt-1">2건</span>
-            </a>
-
-            <a href="../journals/index.html" class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-calendar-check text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">수업일지</span>
-                <span class="text-lg font-black text-slate-800 mt-1">작성</span>
-            </a>
-
-            <a href="../notices/index.html" class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-bullhorn text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">공지사항</span>
-                <span class="text-lg font-black text-slate-800 mt-1">5건</span>
-            </a>
-
-            <a href="../reports/index.html" class="fixed-card">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-3"><i class="fa-solid fa-chart-line text-lg"></i></div>
-                <span class="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학습리포트</span>
-                <span class="text-lg font-black text-slate-800 mt-1">보기</span>
-            </a>
-        </div>
-    </main>
-
-    <script>
-        // DOM 로드 후 실행 보장
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuOverlay = document.getElementById('menu-overlay');
-
-            if (menuToggle && mobileMenu && menuOverlay) {
-                function toggleMenu() {
-                    mobileMenu.classList.toggle('menu-open');
-                    menuOverlay.classList.toggle('hidden');
-                }
-
-                menuToggle.addEventListener('click', toggleMenu);
-                menuOverlay.addEventListener('click', toggleMenu);
-            }
-        });
-    </script>
-</body>
-</html>
