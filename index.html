@@ -4,49 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더엠수학 관리 시스템</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; overflow: hidden; margin: 0; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #e3f7f2; margin: 0; overflow: hidden; }
+        
+        /* 상단 바 색상: 파랑에서 부드러운 그린(#a7f3d0)으로 변경 */
+        .status-bar { height: 35px; background-color: #a7f3d0; width: 100%; }
+        
+        /* 로그인 박스: 폭을 360px로 줄여서 더 슬림하고 세련되게 수정 */
+        .login-container { 
+            background: white; 
+            padding: 3rem 2.5rem; 
+            border-radius: 2.5rem; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); 
+            width: 360px; /* 원장님 요청하신 슬림한 폭 */
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="flex items-center justify-center h-screen bg-[#e3f7f2]">
+<body class="flex flex-col h-screen">
 
-    <div id="login-page" class="flex flex-col items-center p-6 w-full max-w-[420px]">
+    <div class="status-bar"></div>
+
+    <div id="login-page" class="flex-1 flex flex-col items-center justify-center p-6">
         
-        <div class="flex items-center gap-4 mb-10">
-            <img src="logo.png" alt="더엠수학 로고" class="w-14 h-14 object-contain" onerror="this.src='https://via.placeholder.com/60?text=더엠로고'">
-            <h1 class="text-5xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
+        <div class="flex items-center gap-3 mb-8">
+            <img src="logo.png" alt="더엠수학 로고" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/50?text=M'">
+            <h1 class="text-4xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
         </div>
         
-        <div class="bg-white p-12 rounded-[2.5rem] shadow-xl w-full text-center border border-slate-100">
-            <p class="text-slate-500 mb-10 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
+        <div class="login-container text-center">
+            <p class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
             
-            <form id="login-form" class="space-y-6 text-left">
+            <form id="login-form" class="space-y-5 text-left">
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-400 mb-2 uppercase tracking-widest px-1">아이디</label>
-                    <input type="text" value="admin" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-1 ring-emerald-500 outline-none text-sm transition">
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-widest px-1">아이디</label>
+                    <input type="text" value="admin" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-1 ring-emerald-500 outline-none text-sm transition">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-400 mb-2 uppercase tracking-widest px-1">비밀번호</label>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-widest px-1">비밀번호</label>
                     <div class="relative">
-                        <input type="password" id="pw-input" value="1234" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-1 ring-emerald-500 outline-none text-sm transition">
-                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500 transition text-lg"></i>
+                        <input type="password" id="pw-input" value="1234" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-1 ring-emerald-500 outline-none text-sm transition">
+                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500 transition"></i>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest shadow-lg hover:bg-slate-800 transition mt-4">로그인하기</button>
+                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest shadow-lg hover:bg-slate-800 transition mt-2">로그인하기</button>
             </form>
 
-            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4">비밀번호를 잊으셨나요?</button>
+            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-200">비밀번호를 잊으셨나요?</button>
         </div>
         
         <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
 
     <script>
-        // 비밀번호 토글 자바스크립트
+        // 눈동자 클릭 시 비밀번호 보이기/숨기기
         const pwInput = document.getElementById('pw-input');
         const pwToggle = document.getElementById('pw-toggle');
 
@@ -58,6 +76,12 @@
                 pwInput.type = 'password';
                 this.classList.replace('fa-eye-slash', 'fa-eye');
             }
+        });
+
+        // 폼 제출 시 이벤트 (임시)
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('더엠수학 관리 시스템에 접속합니다.');
         });
     </script>
 </body>
