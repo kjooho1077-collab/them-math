@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* 원장님 요청 민트색 배경 및 정자체 설정 */
+        /* [핵심] 모든 기울임 요소를 강제로 정자로 고정 */
+        * { font-style: normal !important; } 
+
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #e3f7f2; margin: 0; }
         
         #login-page { 
@@ -19,10 +21,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 4rem; /* 모바일에서 살짝 아래로 배치 */
+            padding-top: 4rem; 
         }
 
-        /* 슬림한 320px 로그인 박스 */
         .login-card {
             background: white;
             width: 320px;
@@ -32,7 +33,19 @@
             text-align: center;
         }
 
-        #error-msg { display: none; color: #ef4444; font-size: 12px; font-weight: bold; margin-top: 1rem; }
+        /* 입력창 포커스 시 테두리 색상 */
+        input:focus { ring: 1px solid #10b981; border-color: #10b981; }
+
+        /* 하단 카피라이트 전용 스타일 (절대 기울지 않게) */
+        .copyright {
+            margin-top: 3rem;
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-style: normal !important;
+        }
     </style>
 </head>
 <body>
@@ -44,22 +57,22 @@
         </div>
         
         <div class="login-card">
-            <p style="font-style: normal !important;" class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
+            <p class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
             
             <form id="login-form" class="space-y-4 text-left">
                 <div>
                     <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">ID</label>
-                    <input type="text" id="user-id" placeholder="아이디를 입력하세요" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
+                    <input type="text" id="user-id" placeholder="아이디를 입력하세요" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm transition">
                 </div>
                 <div>
                     <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">Password</label>
                     <div class="relative">
-                        <input type="password" id="pw-input" placeholder="비밀번호" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500 transition">
-                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500 transition"></i>
+                        <input type="password" id="pw-input" placeholder="비밀번호" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm transition">
+                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer hover:text-emerald-500"></i>
                     </div>
                 </div>
                 
-                <p id="error-msg"><i class="fa-solid fa-circle-exclamation"></i> 정보가 올바르지 않습니다.</p>
+                <p id="error-msg" class="hidden text-rose-500 text-[11px] font-bold text-center mt-2">정보가 올바르지 않습니다.</p>
                 
                 <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest mt-4 shadow-lg active:scale-95 transition">로그인하기</button>
             </form>
@@ -67,14 +80,13 @@
             <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-100">비밀번호를 잊으셨나요?</button>
         </div>
         
-        <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase italic">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
+        <div class="copyright">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
 
     <script>
         const pwInput = document.getElementById('pw-input');
         const pwToggle = document.getElementById('pw-toggle');
 
-        // 눈동자 토글
         pwToggle.addEventListener('click', () => {
             if (pwInput.type === 'password') {
                 pwInput.type = 'text';
@@ -85,17 +97,15 @@
             }
         });
 
-        // 로그인 로직
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const id = document.getElementById('user-id').value;
             const pw = pwInput.value;
 
             if (id === 'admin' && pw === '1234') {
-                // 성공 시 admin.html 파일로 이동
                 location.href = 'admin.html';
             } else {
-                document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('error-msg').classList.remove('hidden');
             }
         });
     </script>
