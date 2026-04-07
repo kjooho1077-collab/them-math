@@ -7,30 +7,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
         
         #mobile-menu { transition: transform 0.3s ease-in-out; }
         .menu-open { transform: translateX(0) !important; }
-        
+
         .stat-card-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            justify-content: start;
         }
+
         @media (min-width: 1024px) {
             .stat-card-grid {
                 grid-template-columns: repeat(5, 180px);
                 gap: 20px;
             }
         }
+
         .fixed-card {
             background-color: white;
             border-radius: 1.5rem;
             border: 1px solid #f1f5f9;
-            padding: 15px 5px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -40,84 +42,98 @@
             cursor: pointer;
             text-decoration: none;
         }
-        @media (min-width: 1024px) {
-            .fixed-card { width: 180px; height: 180px; padding: 20px; }
-            .fixed-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border-color: #e2e8f0; }
+
+        .fixed-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
-        .fixed-card:active { transform: scale(0.95); }
     </style>
 </head>
-<body class="flex flex-col md:flex-row min-h-screen relative overflow-x-hidden">
 
-    <main class="flex-1 p-5 md:p-12 w-full max-w-7xl mx-auto">
+<body class="flex flex-col md:flex-row min-h-screen">
 
-        <div class="stat-card-grid">
+<!-- 좌측 메뉴 -->
+<aside id="mobile-menu" class="w-64 bg-white border-r flex flex-col">
 
-            <!-- 학생현황 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-user-group text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">학생현황</span>
-                <span class="text-2xl font-black text-slate-800">4명</span>
-            </a>
+    <div class="p-6 font-black text-xl text-emerald-600">더엠수학</div>
 
-            <!-- 반현황 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-layer-group text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">반현황</span>
-                <span class="text-2xl font-black text-slate-800">15개</span>
-            </a>
+    <nav class="flex-1 p-4 space-y-1">
 
-            <!-- 숙제현황 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-book-open text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">숙제현황</span>
-                <span class="text-2xl font-black text-slate-800">3</span>
-            </a>
+        <a class="block px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold">Home</a>
 
-            <!-- 굿티커 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-star text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">굿티커</span>
-                <span class="text-2xl font-black text-slate-800">128</span>
-            </a>
+        <a class="block px-4 py-2">학생현황</a>
+        <a class="block px-4 py-2">반현황</a>
+        <a class="block px-4 py-2">숙제현황</a>
+        <a class="block px-4 py-2">굿티커현황</a>
+        <a class="block px-4 py-2">출결현황</a>
+        <a class="block px-4 py-2">보강현황</a>
+        <a class="block px-4 py-2">수업일지</a>
+        <a class="block px-4 py-2">공지사항</a>
+        <a class="block px-4 py-2">학습리포트</a>
 
-            <!-- 출결 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-user-check text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">출결현황</span>
-                <span class="text-2xl font-black text-slate-800">0/4</span>
-            </a>
+        <!-- 간격 -->
+        <div class="h-6"></div>
 
-            <!-- 보강 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-clock-rotate-left text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">보강현황</span>
-                <span class="text-2xl font-black text-slate-800">2건</span>
-            </a>
+        <!-- 관리 그룹 -->
+        <div class="px-4 text-xs text-slate-400 font-bold">관리</div>
 
-            <!-- 수업일지 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-calendar-check text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">수업일지</span>
-                <span class="text-2xl font-black text-slate-800">작성</span>
-            </a>
+        <a class="block px-4 py-2">학생관리</a>
+        <a class="block px-4 py-2">선생님관리</a>
+        <a class="block px-4 py-2">반관리</a>
+        <a class="block px-4 py-2">설정</a>
 
-            <!-- 공지 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-bullhorn text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">공지사항</span>
-                <span class="text-2xl font-black text-slate-800">5건</span>
-            </a>
+    </nav>
+</aside>
 
-            <!-- 리포트 -->
-            <a href="#" class="fixed-card">
-                <i class="fa-solid fa-chart-line text-xl text-slate-600 mb-2"></i>
-                <span class="text-[11px] font-bold text-slate-400">학습리포트</span>
-                <span class="text-2xl font-black text-slate-800">보기</span>
-            </a>
+<!-- 메인 -->
+<main class="flex-1 p-10">
 
+    <h2 class="text-3xl font-black mb-10">
+        원장님 안녕하세요 😄
+    </h2>
+
+    <!-- 카드 영역 -->
+    <div class="stat-card-grid">
+
+        <div class="fixed-card">
+            <i class="fa-solid fa-user-group text-2xl text-slate-600 mb-3"></i>
+            <div class="text-sm text-slate-400">전체 학생 수</div>
+            <div class="text-2xl font-black">4명</div>
         </div>
-    </main>
+
+        <div class="fixed-card">
+            <i class="fa-solid fa-layer-group text-2xl text-slate-600 mb-3"></i>
+            <div class="text-sm text-slate-400">전체 반</div>
+            <div class="text-2xl font-black">15개</div>
+        </div>
+
+        <div class="fixed-card">
+            <i class="fa-solid fa-check-circle text-2xl text-slate-600 mb-3"></i>
+            <div class="text-sm text-slate-400">숙제 완료</div>
+            <div class="text-2xl font-black">0명</div>
+        </div>
+
+        <div class="fixed-card">
+            <i class="fa-solid fa-times-circle text-2xl text-slate-600 mb-3"></i>
+            <div class="text-sm text-slate-400">숙제 미완료</div>
+            <div class="text-2xl font-black">0명</div>
+        </div>
+
+        <div class="fixed-card">
+            <i class="fa-solid fa-clipboard-list text-2xl text-slate-600 mb-3"></i>
+            <div class="text-sm text-slate-400">오늘 출결</div>
+            <div class="text-2xl font-black">0/4</div>
+        </div>
+
+        <div class="fixed-card">
+            <i class="fa-solid fa-calendar text-2xl text-slate-600 mb-3"></i>
+            <div class="text-sm text-slate-400">보강 예정</div>
+            <div class="text-2xl font-black">2건</div>
+        </div>
+
+    </div>
+
+</main>
 
 </body>
 </html>
