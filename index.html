@@ -10,39 +10,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
+        /* 새로고침(당기기)이 가능하도록 overflow: hidden 제거 */
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; margin: 0; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
 
-        /* 모바일 대문 배경색 */
+        /* 모바일 로그인 페이지 레이아웃 */
         #login-page { 
             background-color: #e3f7f2; 
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* [수정] 위로 치우치지 않게 중앙보다 살짝 아래로 배치하기 위해 상단 여백(padding-top) 추가 */
             justify-content: center;
+            padding-top: 2rem; 
             z-index: 100;
         }
 
-        /* 로그인 박스 (원장님 요청 320px 슬림 버전) */
+        /* 로그인 박스 (320px 슬림 버전 유지) */
         .login-card {
             background: white;
             width: 320px;
             padding: 2.5rem 2rem;
             border-radius: 2.5rem;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            text-center;
+            text-align: center;
         }
 
-        /* PC 레이아웃 설정 */
+        /* PC 레이아웃 (반응형 유지) */
         @media (min-width: 1024px) {
             body { display: flex; height: 100vh; overflow: hidden; }
             .sidebar { width: 260px; background: white; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; flex-shrink: 0; }
             .main-content { flex: 1; overflow-y: auto; display: block; background-color: #f8fafc; }
-            #login-page { position: absolute; inset: 0; }
+            #login-page { position: absolute; inset: 0; padding-top: 0; }
         }
 
-        /* 모바일 화면 설정 */
         @media (max-width: 1023px) {
             .sidebar, .main-content { display: none; }
         }
@@ -56,7 +57,7 @@
             <h1 class="text-4xl font-black text-emerald-600 tracking-tighter">더엠<span class="text-blue-600">수학</span></h1>
         </div>
         
-        <div class="login-card text-center">
+        <div class="login-card">
             <p style="font-style: normal !important;" class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
             
             <form id="login-form" class="space-y-4 text-left">
@@ -77,7 +78,7 @@
             <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-100">비밀번호를 잊으셨나요?</button>
         </div>
 
-        <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
+        <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase italic">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
 
     <aside class="sidebar">
@@ -100,8 +101,8 @@
             THE M MATH MANAGEMENT SYSTEM
         </header>
         <div class="p-8">
-            <h2 class="text-3xl font-black text-slate-800">원장님, 환영합니다! 👋</h2>
-            <p class="text-slate-400 mt-2 font-medium">하단 문구와 비밀번호 찾기 링크를 모두 복구하였습니다.</p>
+            <h2 class="text-3xl font-black text-slate-800">원장님, 화면 수정이 완료되었습니다! 🫡</h2>
+            <p class="text-slate-400 mt-2 font-medium">모바일 정렬 조정 및 새로고침 기능을 활성화했습니다.</p>
         </div>
     </main>
 
