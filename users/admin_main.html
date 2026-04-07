@@ -3,120 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#d1fae5"> 
-    <title>더엠수학학원 | 관리자 로그인</title>
+    <title>더엠수학학원 | 원장님 대시보드</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { font-style: normal !important; } 
-        html, body { 
-            height: 100%; 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background-color: #d1fae5; 
-        }
+        /* 모든 글자 정자체 고정 */
+        * { font-style: normal !important; }
         
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; color: #1e293b; overflow-x: hidden; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        .stat-card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 180px); 
+            gap: 20px;
+            justify-content: start;
         }
-  
-        .animated-bg {
-            min-height: 100dvh; 
-            background: linear-gradient(-45deg, #a7f3d0, #d1fae5, #ecfdf5, #a7f3d0);
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
+
+        .fixed-card {
+            width: 180px;
+            height: 180px;
+            background-color: white;
+            border-radius: 2rem;
+            border: 1px solid #f1f5f9;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
         }
-  
-        input:focus { font-size: 16px !important; } 
+
+        .fixed-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border-color: #e2e8f0;
+        }
+
+        @media (max-width: 1024px) {
+            .stat-card-grid {
+                grid-template-columns: repeat(auto-fill, 160px);
+                justify-content: center;
+            }
+            .fixed-card {
+                width: 160px;
+                height: 160px;
+            }
+        }
     </style>
 </head>
-<body>
-    
-    <div class="animated-bg relative">
-        <div class="absolute inset-0 bg-white/10 backdrop-blur-[1px]"></div>
-  
-        <div class="w-full max-w-md p-6 relative z-10 flex flex-col items-center">
-            <div class="text-center mb-6">
-                <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">더엠<span class="text-blue-600">수학</span></h1>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+    <aside class="w-full md:w-64 bg-white border-r border-slate-100 flex flex-col flex-shrink-0 z-50">
+        <div class="p-4 md:p-6 flex items-center justify-between">
+            <h1 class="text-xl md:text-2xl font-black text-emerald-600 flex items-center gap-2">
+                <img src="../logo.png" alt="M" class="w-8 h-8 object-contain" onerror="this.src='https://via.placeholder.com/40?text=M'">
+                더엠수학
+            </h1>
+        </div>
+        
+        <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
+            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-[0.2em]">Dashboard</div>
+            <a href="#" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold mb-2 text-sm">Home</a>
+            <div class="space-y-0.5">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5 text-center"></i> 숙제현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5 text-center"></i> 굿티커현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5 text-center"></i> 출결현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> 보강현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-calendar-check w-5 text-center"></i> 수업일지</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트</a>
             </div>
-  
-            <div class="mb-10 text-center">
-                <p class="text-slate-600 text-lg font-medium leading-relaxed">안녕하세요<br>더엠수학학원입니다.</p>
+            <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-[0.2em]">Management</div>
+            <div class="space-y-0.5">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 반관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-gear w-5 text-center"></i> 선생님관리</a>
+                <a href="../index.html" class="flex items-center gap-3 px-4 py-2 text-rose-400 hover:bg-rose-50 rounded-xl text-sm mt-4 font-bold"><i class="fa-solid fa-right-from-bracket w-5 text-center"></i> 로그아웃</a>
             </div>
-  
-            <div class="w-full bg-white/95 backdrop-blur-md p-8 rounded-[2.5rem] shadow-2xl shadow-emerald-900/10 border border-white">
-                <form id="login-form" onsubmit="return false;">
-                    <div class="space-y-5">
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5 ml-1 text-left w-full">아이디</label>
-                            <input type="text" id="user-id" placeholder="아이디를 입력하세요" 
-                                class="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all text-base bg-white shadow-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5 ml-1 text-left w-full">비밀번호</label>
-                            <div class="relative">
-                                <input type="password" id="pw-input" placeholder="••••••••" 
-                                    class="w-full px-4 py-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all text-base pr-12 bg-white shadow-sm">
-                                <button type="button" id="toggle_password" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400">
-                                    <i class="fa-regular fa-eye-slash text-lg" id="eye_icon"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p id="error-msg" class="text-rose-500 text-xs mt-4 text-center hidden font-bold">아이디 또는 비밀번호가 틀렸습니다.</p>
-  
-                    <button type="submit" class="w-full mt-6 bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-2xl transition-all shadow-lg text-base tracking-wide active:scale-[0.98]">
-                        로그인하기
-                    </button>
-                </form>
-  
-                <div class="mt-8 text-center">
-                    <a href="#" class="text-sm text-slate-400 font-medium border-b border-slate-200 pb-0.5">비밀번호를 잊으셨나요?</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col min-w-0 bg-white">
+        <header class="hidden md:flex h-14 bg-white border-b border-slate-50 items-center justify-between px-8">
+            <div class="text-slate-300 text-[10px] font-bold tracking-widest uppercase">THE M MATH MANAGEMENT SYSTEM</div>
+        </header>
+
+        <div class="p-6 md:p-12 w-full mx-auto max-w-7xl">
+            <div class="mb-10 text-center md:text-left">
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">
+                    김주호 <span class="text-lg md:text-xl font-medium text-slate-500">원장님</span> 안녕하세요! 😄
+                </h2>
+                <p class="text-slate-400 text-sm md:text-lg mt-3 font-medium">"오늘도 활기찬 더엠수학, 현황을 확인하세요."</p>
+            </div>
+
+            <div class="stat-card-grid">
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-user-group text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학생현황</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">4명</span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-layer-group text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">반현황</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">15개</span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-book-open text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">숙제현황</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">3 <span class="text-rose-500 text-sm font-bold">미1</span></span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-star text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">굿티커</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">128</span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-user-check text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">출결현황</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">0/4</span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-clock-rotate-left text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">보강현황</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">2건</span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-calendar-check text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">수업일지</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">작성</span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-bullhorn text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">공지사항</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">5건</span>
+                </div>
+                <div class="fixed-card">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-chart-line text-xl"></i></div>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">학습리포트</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">보기</span>
                 </div>
             </div>
-  
-            <p class="text-center text-slate-400 text-[10px] mt-12 uppercase tracking-[0.2em] font-medium">
-                &copy; 2026 THE M MATH. All rights reserved.
-            </p>
         </div>
-    </div>
-  
-    <script>
-        // 자바스크립트 로직: 원장님이 어제 주신 로직을 이 예쁜 디자인에 맞게 이식했습니다.
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const id = document.getElementById('user-id').value;
-            const pw = document.getElementById('pw-input').value;
-
-            // [경로 수정 완료] users/ 폴더 경로를 정확히 꽂아넣었습니다.
-            if (id === 'admin' && pw === '1234') {
-                location.href = 'users/admin_main.html'; 
-            } else if (id === 'teacher' && pw === '1234') {
-                location.href = 'users/teacher_main.html';
-            } else if (id === 'student' && pw === '1234') {
-                location.href = 'users/student_main.html';
-            } else {
-                document.getElementById('error-msg').classList.remove('hidden');
-            }
-        });
-
-        // 비밀번호 눈아이콘 기능 유지
-        document.getElementById('toggle_password').addEventListener('click', function () {
-            const pwInput = document.getElementById('pw-input');
-            const eyeIcon = document.getElementById('eye_icon');
-            const type = pwInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            pwInput.setAttribute('type', type);
-            eyeIcon.classList.toggle('fa-eye-slash');
-            eyeIcon.classList.toggle('fa-eye');
-        });
-    </script>
+    </main>
 </body>
 </html>
