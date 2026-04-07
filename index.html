@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* overflow: hidden 제거하여 당겨서 새로고침 가능하게 수정 */
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; margin: 0; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
 
-        /* 모바일 대문 배경색 (민트) */
+        /* 모바일 대문 배경색 */
         #login-page { 
             background-color: #e3f7f2; 
             min-height: 100vh;
@@ -21,25 +21,28 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            z-index: 100;
         }
 
-        /* 로그인 박스 폭 (320px 슬림 버전) */
+        /* 로그인 박스 (원장님 요청 320px 슬림 버전) */
         .login-card {
             background: white;
             width: 320px;
             padding: 2.5rem 2rem;
             border-radius: 2.5rem;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-center;
         }
 
         /* PC 레이아웃 설정 */
         @media (min-width: 1024px) {
             body { display: flex; height: 100vh; overflow: hidden; }
-            .sidebar { width: 260px; background: white; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; }
-            .main-content { flex: 1; overflow-y: auto; display: block; }
-            #login-page { position: absolute; inset: 0; z-index: 50; }
+            .sidebar { width: 260px; background: white; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; flex-shrink: 0; }
+            .main-content { flex: 1; overflow-y: auto; display: block; background-color: #f8fafc; }
+            #login-page { position: absolute; inset: 0; }
         }
 
+        /* 모바일 화면 설정 */
         @media (max-width: 1023px) {
             .sidebar, .main-content { display: none; }
         }
@@ -57,27 +60,48 @@
             <p style="font-style: normal !important;" class="text-slate-500 mb-8 text-base font-bold">안녕하세요. 더엠수학학원입니다.</p>
             
             <form id="login-form" class="space-y-4 text-left">
-                <input type="text" value="admin" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm mb-3">
-                <div class="relative">
-                    <input type="password" id="pw-input" value="1234" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm">
-                    <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer"></i>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">ID</label>
+                    <input type="text" value="admin" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500">
                 </div>
-                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest mt-4">로그인하기</button>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1 px-1 uppercase tracking-widest">Password</label>
+                    <div class="relative">
+                        <input type="password" id="pw-input" value="1234" class="w-full p-3.5 bg-slate-50 border border-slate-100 rounded-2xl outline-none text-sm focus:ring-1 ring-emerald-500">
+                        <i id="pw-toggle" class="fa-regular fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 cursor-pointer"></i>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-sm font-black tracking-widest mt-4 shadow-lg">로그인하기</button>
             </form>
+
+            <button class="mt-8 text-xs font-bold text-slate-400 hover:text-rose-500 transition underline underline-offset-4 decoration-slate-100">비밀번호를 잊으셨나요?</button>
         </div>
+
+        <div class="mt-12 text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">© 2026 THE M MATH. ALL RIGHTS RESERVED.</div>
     </div>
 
     <aside class="sidebar">
-        <div class="p-6 text-2xl font-black text-emerald-600">더엠수학</div>
-        <nav class="flex-1 p-4">
-            <div class="px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm italic">Dashboard</div>
+        <div class="p-6 text-2xl font-black text-emerald-600 tracking-tighter flex items-center gap-2">
+            <img src="logo.png" alt="로고" class="w-6 h-6 object-contain">
+            <span>더엠<span class="text-blue-600">수학</span></span>
+        </div>
+        <nav class="flex-1 p-4 space-y-1">
+            <a href="#" class="flex items-center gap-3 px-4 py-2.5 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm">
+                <i class="fa-solid fa-house"></i> 대시보드
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl text-sm font-bold">
+                <i class="fa-solid fa-user-graduate"></i> 학생관리
+            </a>
         </nav>
     </aside>
 
     <main class="main-content">
-        <header class="h-14 bg-white border-b border-slate-100 flex items-center px-8 text-[10px] font-bold text-slate-300 tracking-widest uppercase">THE M MATH SYSTEM</header>
+        <header class="h-14 bg-white border-b border-slate-100 flex items-center px-8 text-[10px] font-bold text-slate-300 tracking-widest uppercase italic">
+            THE M MATH MANAGEMENT SYSTEM
+        </header>
         <div class="p-8">
-            <h2 class="text-3xl font-black text-slate-800">새로고침 기능이 복구되었습니다. 🫡</h2>
+            <h2 class="text-3xl font-black text-slate-800">원장님, 환영합니다! 👋</h2>
+            <p class="text-slate-400 mt-2 font-medium">하단 문구와 비밀번호 찾기 링크를 모두 복구하였습니다.</p>
         </div>
     </main>
 
@@ -101,7 +125,7 @@
             if (window.innerWidth >= 1024) {
                 loginPage.style.display = 'none';
             } else {
-                alert('로그인 성공!');
+                alert('로그인되었습니다!');
             }
         });
     </script>
