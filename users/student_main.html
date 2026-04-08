@@ -99,11 +99,17 @@
     <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
 
     <main class="flex-1 p-5 md:p-12 w-full max-w-7xl mx-auto">
-        <div class="mb-8 mt-2 md:mt-0 text-center md:text-left">
+        <div class="mb-4 mt-2 md:mt-0 text-center md:text-left">
             <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
                 김주호 <span class="text-base md:text-xl font-medium text-slate-500">학생</span> 안녕! 😄
             </h2>
-            </div>
+        </div>
+
+        <div class="mb-8 text-center md:text-left">
+            <p id="admin-slogan-student" class="text-emerald-600 text-sm md:text-lg font-medium italic py-1">
+                "오늘도 즐겁게 수학하자! 더엠수학"
+            </p>
+        </div>
 
         <div class="stat-card-grid">
             <div class="fixed-card">
@@ -159,6 +165,20 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const studentPhone = "010-5678-1234"; 
+
+            // 1. 관리자 슬로건 로드 (학년별 로직 포함)
+            const studentGrade = "고3"; // 예시: 현재 로그인한 학생의 학년
+            const sloganDisplay = document.getElementById('admin-slogan-student');
+            
+            // 학년별 메시지가 있으면 출력, 없으면 전체 공통 메시지 출력
+            const savedGradeSlogan = localStorage.getItem(`admin_slogan_student_${studentGrade}`);
+            const savedCommonSlogan = localStorage.getItem('admin_slogan_student_common');
+
+            if (savedGradeSlogan) {
+                sloganDisplay.innerText = `"${savedGradeSlogan}"`;
+            } else if (savedCommonSlogan) {
+                sloganDisplay.innerText = `"${savedCommonSlogan}"`;
+            }
         });
     </script>
 </body>
