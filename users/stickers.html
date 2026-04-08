@@ -8,68 +8,18 @@
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { font-style: normal !important; text-decoration: none !important; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; } /* 일관된 밝은 회색 배경 */
-        
-        /* 스티커판 스타일 */
-        .sticker-board {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr); /* 10열 */
-            gap: 8px; /* 칸 사이 간격 */
-            max-width: 500px; /* 모바일 고려 최대 폭 */
-            margin: 0 auto;
-        }
-        
-        @media (max-width: 640px) {
-            .sticker-board { gap: 5px; } /* 모바일에서 간격 축소 */
-        }
-
-        .sticker-cell {
-            aspect-ratio: 1; /* 정사각형 유지 */
-            border-radius: 50%; /* 동그라미 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        /* 🟦 채워진 스티커 (황금색 + 최고 아이콘) */
-        .sticker-filled {
-            background-color: #f59e0b; /* amber-500 */
-            color: #ffffff;
-            box-shadow: 0 2px 5px rgba(245, 158, 11, 0.4);
-            border: 1px solid #d97706; /* amber-600 */
-        }
-        
-        /* 스티커 내부 최고 아이콘 (따봉) */
-        .sticker-filled::after {
-            content: '👍'; /* 최고 아이콘 */
-            position: absolute;
-            font-size: 14px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.9;
-        }
-        
-        /* 채워진 스티커 숫자 숨기기 (아이콘 부각) */
-        .sticker-filled .cell-num {
-            opacity: 0;
-        }
-
-        /* ⬜ 빈 스티커 칸 (회색 테두리) */
-        .sticker-empty {
-            background-color: #ffffff;
-            color: #94a3b8; /* slate-400 */
-            border: 1px solid #e2e8f0; /* slate-200 */
-        }
+        * { font-style: normal !important; text-decoration: none !important; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
+        .sticker-board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; max-width: 500px; margin: 0 auto; }
+        @media (max-width: 640px) { .sticker-board { gap: 5px; } }
+        .sticker-cell { aspect-ratio: 1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; position: relative; transition: all 0.2s ease; }
+        .sticker-filled { background-color: #f59e0b; color: #ffffff; box-shadow: 0 2px 5px rgba(245, 158, 11, 0.4); border: 1px solid #d97706; }
+        .sticker-filled::after { content: '👍'; position: absolute; font-size: 14px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.9; }
+        .sticker-filled .cell-num { opacity: 0; }
+        .sticker-empty { background-color: #ffffff; color: #94a3b8; border: 1px solid #e2e8f0; }
     </style>
 </head>
 <body class="p-5 md:p-10">
-
     <div class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
         <button onclick="history.back()" class="text-slate-400 hover:text-amber-600 transition-colors p-2">
             <i class="fa-solid fa-arrow-left text-2xl"></i>
@@ -77,11 +27,8 @@
         <h1 class="text-xl font-black text-slate-800">나의 굿티커 현황</h1>
         <div class="w-10"></div> 
     </div>
-
     <main class="max-w-4xl mx-auto space-y-8">
-        
         <div class="bg-white p-6 md:p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative overflow-hidden">
-            
             <div class="text-center mb-8 relative z-10">
                 <p class="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-1">THE M MATH ACADEMY</p>
                 <div class="flex items-center justify-center gap-3">
@@ -89,53 +36,39 @@
                     <span class="text-lg font-bold text-slate-400">/ 50 개</span>
                 </div>
             </div>
-
             <div class="sticker-board mb-10 relative z-10">
                 <script>
                     const totalStickers = 50;
-                    const myStickers = 42; // 원장님, 이 숫자가 현재 채워진 스티커 개수입니다!
+                    const myStickers = 42;
                     const board = document.querySelector('.sticker-board');
-
                     for (let i = 1; i <= totalStickers; i++) {
                         const cell = document.createElement('div');
                         cell.classList.add('sticker-cell');
-                        
-                        // 숫자를 감싸는 span 생성 (빈칸일 때만 보임)
                         const numSpan = document.createElement('span');
                         numSpan.classList.add('cell-num');
                         numSpan.innerText = i;
                         cell.appendChild(numSpan);
-
-                        // 채워진 스티커인지 빈칸인지 판별
-                        if (i <= myStickers) {
-                            cell.classList.add('sticker-filled'); // 채움 클래스
-                        } else {
-                            cell.classList.add('sticker-empty'); // 빈칸 클래스
-                        }
-                        
+                        if (i <= myStickers) { cell.classList.add('sticker-filled'); } 
+                        else { cell.classList.add('sticker-empty'); }
                         board.appendChild(cell);
                     }
                 </script>
             </div>
-
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-slate-100 pt-6 relative z-10">
                 <div class="px-5 py-2.5 border-2 border-slate-200 rounded-xl bg-slate-50">
                     <p class="text-base font-bold text-slate-900">이름: <span class="text-slate-500 ml-1">김주호</span></p>
                 </div>
                 <p class="text-lg font-black text-slate-400">--- 더엠 수학학원 ---</p>
             </div>
-            
             <div class="absolute -right-8 -top-8 w-40 h-40 border-[15px] border-amber-50 rounded-full flex items-center justify-center rotate-[-15deg]">
                 <span class="text-3xl font-black text-amber-50 opacity-60">GOOD</span>
             </div>
         </div>
-
         <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
             <div class="p-5 border-b border-slate-50 bg-slate-50/50 flex justify-between items-center">
                 <h3 class="font-bold text-slate-700">굿티커 지급 기준</h3>
                 <span class="text-[10px] font-bold text-slate-400 uppercase">the m rule</span>
             </div>
-            
             <div class="p-6">
                 <ul class="space-y-3 text-slate-700 text-sm md:text-base list-decimal list-inside font-medium">
                     <li><span class="font-bold text-slate-900">출석</span>하고 굿티커 득템!</li>
@@ -149,8 +82,6 @@
                 </p>
             </div>
         </div>
-
     </main>
-
 </body>
 </html>
