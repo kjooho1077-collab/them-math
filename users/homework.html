@@ -10,12 +10,11 @@
     <style>
         * { font-style: normal !important; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        .badge-ongoing { background-color: #fff1f2; color: #f43f5e; } /* 진행중 - 연분홍 */
-        .badge-done { background-color: #f0fdf4; color: #16a34a; }    /* 완료 - 연초록 */
+        .badge-ongoing { background-color: #fff1f2; color: #f43f5e; } 
+        .badge-done { background-color: #f0fdf4; color: #16a34a; }    
         
         /* ⭐ 황금색 별 스타일 */
-        .star-rating .fa-star,
-        .star-rating .fa-star-half-stroke { color: #f59e0b; } /* amber-500 */
+        .star-rating .fa-star { color: #f59e0b; } /* amber-500 */
         .star-rating .fa-regular.fa-star { color: #e2e8f0; } /* slate-200 (빈 별) */
     </style>
 </head>
@@ -46,9 +45,7 @@
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star-half-stroke"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
+                    <i class="fa-regular fa-star text-slate-200"></i> </div>
             </div>
         </div>
 
@@ -68,7 +65,8 @@
                 </button>
                 
                 <div class="star-rating flex gap-0.5 text-sm">
-                    <i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
                     <i class="fa-regular fa-star"></i>
                     <i class="fa-regular fa-star"></i>
                 </div>
@@ -99,18 +97,19 @@
                 <div class="flex-1">
                     <div class="flex items-center gap-2 mb-1">
                         <span class="px-2 py-0.5 rounded-md text-[10px] font-bold badge-done">완료됨</span>
-                        <span class="text-[11px] text-slate-400 font-medium italic">학생이 완료 선택함</span>
+                        <span class="text-[11px] text-slate-400 font-medium italic">학생 완료</span>
                     </div>
-                    <h3 class="font-bold text-slate-800 text-sm md:text-base line-through">삼각형의 넓이 심화 프린트</h3>
+                    <h3 class="font-bold text-slate-800 text-sm md:text-base line-through text-slate-400">삼각형의 넓이 심화 프린트</h3>
                 </div>
                 
-                <div class="px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <div class="px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-emerald-100">
                     <i class="fa-solid fa-check"></i>
                     완료됨
                 </div>
                 
                 <div class="star-rating flex gap-0.5 text-sm">
-                    <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                 </div>
