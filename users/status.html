@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 나의 현황</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="p-5 md:p-10">
+
+    <div class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
+        <button onclick="history.back()" class="text-slate-400 hover:text-emerald-600 transition-colors">
+            <i class="fa-solid fa-arrow-left text-2xl"></i>
+        </button>
+        <h1 class="text-xl font-black text-slate-800">나의 학습 현황</h1>
+        <div class="w-8"></div> </div>
+
+    <main class="max-w-4xl mx-auto space-y-6">
+        
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-5">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-slate-800">김주호 <span class="text-sm font-medium text-slate-400 ml-2">고3-A반</span></h2>
+                <p class="text-sm text-slate-500 mt-1">입학일: 2024.01.15</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-5 border-b border-slate-50 bg-slate-50/50">
+                <h3 class="font-bold text-slate-700">기본 정보</h3>
+            </div>
+            <div class="divide-y divide-slate-50">
+                <div class="p-5 flex justify-between items-center">
+                    <span class="text-slate-500 text-sm">연락처</span>
+                    <span class="font-medium text-slate-800">010-5678-1234</span>
+                </div>
+                <div class="p-5 flex justify-between items-center">
+                    <span class="text-slate-500 text-sm">학교</span>
+                    <span class="font-medium text-slate-800">더엠고등학교</span>
+                </div>
+                <div class="p-5 flex justify-between items-center">
+                    <span class="text-slate-500 text-sm">학부모 연락처</span>
+                    <span class="font-medium text-slate-800">010-1234-5678</span>
+                </div>
+                <div class="p-5 flex justify-between items-center">
+                    <span class="text-slate-500 text-sm">현재 수강료 상태</span>
+                    <span class="font-bold text-emerald-600 italic">결제완료</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-slate-400 text-xs px-10">
+            정보가 다르다면 원장님께 말씀해 주세요! 😊
+        </p>
+
+    </main>
+
+</body>
+</html>
