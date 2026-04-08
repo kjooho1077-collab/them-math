@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 학생관리</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
+        
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .menu-open { transform: translateX(0) !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* 학생 카드 스타일 */
+        .student-card { background: white; border-radius: 1.2rem; padding: 1.2rem; border: 1px solid #f1f5f9; transition: 0.2s; }
+        .student-card:active { transform: scale(0.98); background-color: #f8fafc; }
+        
+        /* 등급별 뱃지 */
+        .badge { padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+        .badge-blue { background: #eff6ff; color: #2563eb; }
+        .badge-green { background: #f0fdf4; color: #16a34a; }
+        
+        /* 검색창 스타일 */
+        .search-box { background: white; border: 2px solid #f1f5f9; border-radius: 1rem; padding: 0.8rem 1rem; width: 100%; font-weight: 600; outline: none; }
+        .search-box:focus { border-color: #2563eb; }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen relative overflow-x-hidden">
+
+    <header class="md:hidden bg-white border-b border-slate-100 p-4 flex items-center justify-between sticky top-0 z-[60]">
+        <h1 class="text-xl font-black text-blue-600 flex items-center gap-2">
+            <img src="../logo.png" alt="M" class="w-7 h-7 object-contain" onerror="this.src='https://via.placeholder.com/40?text=M'">
+            더엠수학
+        </h1>
+        <button id="menu-toggle" class="p-2 text-slate-500">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+    </header>
+
+    <aside id="mobile-menu" class="fixed md:relative inset-y-0 left-0 w-64 bg-white border-r border-slate-100 flex flex-col z-[70] -translate-x-full md:translate-x-0">
+        <div class="p-6 hidden md:flex items-center justify-between">
+            <h1 class="text-2xl font-black text-blue-600 flex items-center gap-2">
+                <img src="../logo.png" alt="M" class="w-8 h-8 object-contain">
+                더엠수학
+            </h1>
+        </div>
+        
+        <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
+            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Teacher Dashboard</div>
+            <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm mb-2">Home</a>
+            
+            <div class="space-y-0.5">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5 text-center"></i> 숙제체크</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5 text-center"></i> 굿티커 부여</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5 text-center"></i> 출결관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> 보강일정</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-calendar-check w-5 text-center"></i> 수업일지 작성</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트 생성</a>
+            </div>
+
+            <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Management</div>
+            <div class="space-y-0.5">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경</a>
+            </div>
+            
+            <div class="mt-auto pt-10 pb-4">
+                <a href="../index.html" class="flex items-center gap-3 px-4 py-3 text-rose-500 bg-rose-50 rounded-2xl text-sm font-bold justify-center">
+                    <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
+
+    <main class="flex-1 p-5 md:p-10 w-full max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-black text-slate-800 tracking-tight">학생관리</h2>
+                <p class="text-slate-400 text-sm font-bold">현재 재원생: 42명</p>
+            </div>
+            <button class="bg-blue-600 text-white px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-100 active:scale-95 transition-all">
+                <i class="fa-solid fa-user-plus"></i> 신규 학생 등록
+            </button>
+        </div>
+
+        <div class="mb-6 flex gap-2">
+            <div class="relative flex-1">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" class="search-box pl-11" placeholder="학생 이름 또는 연락처 검색">
+            </div>
+            <button class="bg-white border-2 border-slate-100 p-3 rounded-2xl text-slate-600">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            <div class="student-card shadow-sm">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                            <i class="fa-solid fa-user text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-lg text-slate-800">김철수</h3>
+                            <span class="badge badge-blue">중2-A반</span>
+                        </div>
+                    </div>
+                    <button class="text-slate-300"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                </div>
+                <div class="space-y-2 mb-4 text-sm font-bold text-slate-500">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-phone w-4"></i> 010-1234-5678</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-star w-4 text-yellow-400"></i> 굿티커: 12개</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="py-2 bg-slate-50 text-slate-600 rounded-xl text-xs font-bold">수업기록</button>
+                    <button class="py-2 bg-blue-50 text-blue-600 rounded-xl text-xs font-bold">상세정보</button>
+                </div>
+            </div>
+
+            <div class="student-card shadow-sm border-rose-100 bg-rose-50/30">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center text-rose-400">
+                            <i class="fa-solid fa-user text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-lg text-slate-800">이영희</h3>
+                            <span class="badge badge-green">고1-수능반</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-rose-500 text-white px-2 py-1 rounded-full font-black">관심학생</span>
+                </div>
+                <div class="space-y-2 mb-4 text-sm font-bold text-slate-500">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-phone w-4"></i> 010-9876-5432</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-star w-4 text-yellow-400"></i> 굿티커: 5개</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="py-2 bg-white text-slate-600 rounded-xl text-xs font-bold border border-slate-100">수업기록</button>
+                    <button class="py-2 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-100">상세정보</button>
+                </div>
+            </div>
+
+            </div>
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('menu-open');
+            menuOverlay.classList.toggle('hidden');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+    </script>
+</body>
+</html>
