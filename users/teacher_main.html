@@ -111,7 +111,7 @@
         </div>
 
         <div class="mb-8 text-center md:text-left">
-            <p id="admin-slogan-display" class="text-slate-400 text-sm md:text-lg font-medium italic border-l-4 border-blue-500 pl-4 py-1">
+            <p id="admin-slogan-display" class="text-slate-400 text-sm md:text-lg font-medium italic py-1">
                 "담당 학생들의 현황을 확인하고 관리하세요."
             </p>
         </div>
@@ -178,10 +178,9 @@
         menuToggle.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // 🌐 학원 설정 슬로건 로드 로직
+        // 관리자가 설정한 슬로건 로드 (admin_slogan_teacher 값 사용)
         document.addEventListener('DOMContentLoaded', () => {
             const sloganDisplay = document.getElementById('admin-slogan-display');
-            // 'admin_slogan_teacher'라는 키로 저장된 값이 있으면 가져오고, 없으면 기본 문구 표시
             const savedSlogan = localStorage.getItem('admin_slogan_teacher');
             
             if (savedSlogan) {
