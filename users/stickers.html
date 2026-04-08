@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 굿티커 현황</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { font-style: normal !important; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fdfaf3; color: #1e293b; } /* 따뜻한 미색 배경 */
+        .sticker-gold { color: #f59e0b; }
+    </style>
+</head>
+<body class="p-5 md:p-10">
+
+    <div class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
+        <button onclick="history.back()" class="text-slate-400 hover:text-amber-600 transition-colors p-2">
+            <i class="fa-solid fa-arrow-left text-2xl"></i>
+        </button>
+        <h1 class="text-xl font-black text-slate-800">굿티커 현황</h1>
+        <div class="w-10"></div> 
+    </div>
+
+    <main class="max-w-4xl mx-auto space-y-6">
+        
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-amber-100 text-center relative overflow-hidden">
+            <i class="fa-solid fa-face-smile absolute -right-4 -top-4 text-8xl text-amber-50 opacity-50"></i>
+            
+            <p class="text-sm font-bold text-amber-600 mb-2">현재 보유 굿티커</p>
+            <div class="flex items-center justify-center gap-3">
+                <i class="fa-solid fa-certificate sticker-gold text-4xl"></i>
+                <span class="text-6xl font-black text-slate-800">42</span>
+                <span class="text-xl font-bold text-slate-400">개</span>
+            </div>
+            
+            <div class="mt-8">
+                <div class="flex justify-between text-xs font-bold mb-2 px-1">
+                    <span class="text-amber-600">다음 보상까지</span>
+                    <span class="text-slate-400">8개 남음 (50개 목표)</span>
+                </div>
+                <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-amber-400 rounded-full" style="width: 84%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-5 border-b border-slate-50 bg-slate-50/50 flex justify-between items-center">
+                <h3 class="font-bold text-slate-700">최근 획득 내역</h3>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">최근 30일</span>
+            </div>
+            
+            <div class="divide-y divide-slate-50">
+                <div class="p-5 flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center text-amber-500">
+                            <i class="fa-solid fa-star text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800 text-sm">주간 테스트 만점</p>
+                            <p class="text-[11px] text-slate-400">2024.04.05 · 김철수 선생님</p>
+                        </div>
+                    </div>
+                    <span class="font-black text-amber-500 text-lg">+3</span>
+                </div>
+
+                <div class="p-5 flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center text-amber-500">
+                            <i class="fa-solid fa-pencil text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800 text-sm">과제 완성도 우수 (별 4개)</p>
+                            <p class="text-[11px] text-slate-400">2024.04.03 · 이영희 선생님</p>
+                        </div>
+                    </div>
+                    <span class="font-black text-amber-500 text-lg">+1</span>
+                </div>
+
+                <div class="p-5 flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center text-amber-500">
+                            <i class="fa-solid fa-thumbs-up text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800 text-sm">태도 점수 (선행)</p>
+                            <p class="text-[11px] text-slate-400">2024.04.01 · 원장님</p>
+                        </div>
+                    </div>
+                    <span class="font-black text-amber-500 text-lg">+2</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-amber-50 rounded-[2rem] border border-amber-100 flex items-center gap-4">
+            <div class="text-2xl">🎁</div>
+            <div>
+                <p class="text-xs font-bold text-amber-800">보상 안내</p>
+                <p class="text-[11px] text-amber-700 leading-relaxed mt-0.5">
+                    굿티커 50개를 모으면 <span class="font-black underline">매점 이용권 5,000원</span>으로 교환할 수 있어요!
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
