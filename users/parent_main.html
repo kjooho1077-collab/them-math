@@ -103,8 +103,7 @@
             <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
                 김주호 <span class="text-base md:text-xl font-medium text-slate-500">학부모님</span> 안녕하세요! 😄
             </h2>
-            <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium italic">"현명한 관리, 더엠수학!"</p>
-        </div>
+            </div>
 
         <div class="stat-card-grid" id="stat-container">
             <div class="fixed-card child-only">
@@ -160,19 +159,15 @@
 
         /* 자녀 필터링 로직 (더미 데이터 예시) */
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. 현재 로그인한 부모님의 전화번호 (실제 구현시 세션/로컬스토리지에서 가져옴)
             const parentPhone = "010-1234-5678"; 
 
-            // 2. 전체 학생 데이터 예시 (학생정보에 부모님 전화번호 포함)
             const allStudents = [
                 { name: "김철수", parentContact: "010-1234-5678", stickers: 15, homework: "완료", attendance: "등원" },
                 { name: "이영희", parentContact: "010-9999-8888", stickers: 20, homework: "미흡", attendance: "미등원" }
             ];
 
-            // 3. 내 자녀만 필터링
             const myChildren = allStudents.filter(student => student.parentContact === parentPhone);
 
-            // 4. 화면 반영
             if(myChildren.length > 0) {
                 document.getElementById('child-count').innerText = `${myChildren.length}명`;
                 document.getElementById('sticker-count').innerText = myChildren.reduce((acc, curr) => acc + curr.stickers, 0);
