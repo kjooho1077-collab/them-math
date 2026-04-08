@@ -99,11 +99,17 @@
     <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
 
     <main class="flex-1 p-5 md:p-12 w-full max-w-7xl mx-auto">
-        <div class="mb-8 mt-2 md:mt-0 text-center md:text-left">
+        <div class="mb-4 mt-2 md:mt-0 text-center md:text-left">
             <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
                 김주호 <span class="text-base md:text-xl font-medium text-slate-500">학부모님</span> 안녕하세요! 😄
             </h2>
-            </div>
+        </div>
+
+        <div class="mb-8 text-center md:text-left">
+            <p id="admin-slogan-parent" class="text-rose-500 text-sm md:text-lg font-bold py-1">
+                "학부모님, 공지사항을 확인해 주세요!"
+            </p>
+        </div>
 
         <div class="stat-card-grid" id="stat-container">
             <div class="fixed-card child-only">
@@ -157,10 +163,17 @@
         menuToggle.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        /* 자녀 필터링 로직 (더미 데이터 예시) */
+        /* 자녀 필터링 로직 및 관리자 슬로건 로드 */
         document.addEventListener('DOMContentLoaded', () => {
-            const parentPhone = "010-1234-5678"; 
+            // 1. 관리자 슬로건 로드 (학부모 전용)
+            const parentSloganDisplay = document.getElementById('admin-slogan-parent');
+            const savedParentSlogan = localStorage.getItem('admin_slogan_parent');
+            if (savedParentSlogan) {
+                parentSloganDisplay.innerText = `"${savedParentSlogan}"`;
+            }
 
+            // 2. 자녀 현황 데이터 로직 (기존 유지)
+            const parentPhone = "010-1234-5678"; 
             const allStudents = [
                 { name: "김철수", parentContact: "010-1234-5678", stickers: 15, homework: "완료", attendance: "등원" },
                 { name: "이영희", parentContact: "010-9999-8888", stickers: 20, homework: "미흡", attendance: "미등원" }
