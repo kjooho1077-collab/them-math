@@ -103,8 +103,7 @@
             <h2 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">
                 김주호 <span class="text-base md:text-xl font-medium text-slate-500">학생</span> 안녕! 😄
             </h2>
-            <p class="text-slate-400 text-sm md:text-lg mt-1 font-medium italic">"오늘의 노력이 내일의 실력이 된다! 더엠수학"</p>
-        </div>
+            </div>
 
         <div class="stat-card-grid">
             <div class="fixed-card">
@@ -146,7 +145,6 @@
     </main>
 
     <script>
-        // 메뉴 토글 로직
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuOverlay = document.getElementById('menu-overlay');
@@ -159,12 +157,8 @@
         menuToggle.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // 데이터 필터링 로직 (학생 본인 전화번호 기준)
         document.addEventListener('DOMContentLoaded', () => {
-            const studentPhone = "010-5678-1234"; // 로그인한 학생 본인 번호 (가정)
-            
-            // 필터링 적용 코드는 학부모 화면과 동일한 구조를 갖되 
-            // 데이터 소스에서 본인의 정보만 찾아 바인딩하도록 구현하면 됩니다.
+            const studentPhone = "010-5678-1234"; 
         });
     </script>
 </body>
