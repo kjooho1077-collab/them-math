@@ -1,1 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 굿티커 현황</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { font-style: normal !important; text-decoration: none !important; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
+        
+        /* 🏆 타이틀 스타일 */
+        .title-gold {
+            background: linear-gradient(135deg, #e4c275 0%, #d4ac50 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
 
+        /* 🟦 질서 있는 스티커판 */
+        .sticker-board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; max-width: 500px; margin: 0 auto; }
+        @media (max-width: 640px) { .sticker-board { gap: 4px; } }
+        
+        .sticker-cell { 
+            aspect-ratio: 1; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            font-size: 9px; font-weight: 800; border: 1px solid #e2e8f0; background-color: #ffffff; 
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* 🎨 색상 강화 (원장님 요청 반영) */
+        .filled-y { background-color: #FFD700; color: #856404; border: 1px solid #EEBC1D; } /* 쨍한 노랑 */
+        .filled-p { background-color: #FFB6C1; color: #C71585; border: 1px solid #FF69B4; } /* 분홍 (개근) */
+        .filled-g { background-color: #4ade80; color: #064e3b; border: 1px solid #22c55e; } /* 초록 */
+        .filled-r { background-color: #f87171; color: #ffffff; border: 1px solid #ef4444; } /* 빨강 */
+        .filled-b { background-color: #60a5fa; color: #ffffff; border: 1px solid #3b82f6; } /* 파랑 */
+        
+        .rule-table th, .rule-table td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left; font-size: 13px; }
+        .rule-table th { background-color: #f8fafc; font-weight: 700; width: 85px; }
+        .badge-count { font-weight: 900; color: #f59e0b; margin-left: 4px; }
+    </style>
+</head>
+<body class="p-5 md:p-10">
+    <div class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
+        <button onclick="history.back()" class="text-slate-400 hover:text-emerald-600 transition-colors p-2">
+            <i class="fa-solid fa-arrow-left text-2xl"></i>
+        </button>
+        <h1 class="text-xl font-black text-slate-800 italic">THE M MATH</h1>
+        <div class="w-10"></div> 
+    </div>
+
+    <main class="max-w-4xl mx-auto space-y-6">
+        
+        <div class="bg-white p-6 md:p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative overflow-hidden">
+            <div class="text-center mb-8 relative z-10">
+                <p class="text-[12px] font-bold text-slate-500 uppercase tracking-widest">더엠 수학학원</p>
+                <h2 class="title-gold text-5xl mb-4">굿티커 현황</h2>
+                <div class="flex items-center justify-center gap-3">
+                    <span class="text-6xl font-black text-slate-900" id="totalCount">0</span>
+                    <span class="text-lg font-bold text-slate-400">/ 50 개</span>
+                </div>
+            </div>
+
+            <div class="sticker-board mb-10 relative z-10" id="board"></div>
+
+            <div class="flex justify-between items-center border-t border-slate-100 pt-6 relative z-10">
+                <div class="bg-slate-50 px-5 py-2.5 rounded-2xl border border-slate-200">
+                    <p class="text-sm font-black text-slate-900">이름: <span class="text-emerald-600 ml-1">장리원</span></p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] font-bold text-slate-300">STAMP CARD SYSTEM</p>
+                    <p class="text-xs font-black text-slate-400">더엠 수학학원</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-5 border-b border-slate-100 bg-slate-50/50">
+                <h3 class="font-bold text-slate-700 text-sm">굿티커 지급 기준</h3>
+            </div>
+            
+            <table class="w-full rule-table">
+                <tbody>
+                    <tr>
+                        <th class="text-yellow-500">노란색</th>
+                        <td>정시 또는 이전에 등원한 학생 <span class="badge-count">1개</span></td>
+                    </tr>
+                    <tr class="bg-pink-50/30">
+                        <th class="text-pink-500 font-black">분홍색</th>
+                        <td class="font-bold text-pink-600">1주일 동안 등하원을 빠지지 않고 체크 <span class="badge-count text-pink-600">3개</span></td>
+                    </tr>
+                    <tr>
+                        <th class="text-green-600">초록색</th>
+                        <td>숙제완료 클릭 <span class="badge-count">1개</span> / 숙제완성도 '별 2개' 이상 <span class="badge-count">1개</span></td>
+                    </tr>
+                    <tr>
+                        <th class="text-red-500">빨간색</th>
+                        <td>D/T 70점↑(1개), 80점↑(2개), 90점↑(3개), 100점(4개)</td>
+                    </tr>
+                    <tr>
+                        <th class="text-blue-600 border-b-0">파란색</th>
+                        <td class="border-b-0 text-xs">매일국어 XP 결과에 따른 지급 (등원 아닐 시 2배 보너스!)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // 질서 있게 붙이기 위해 데이터를 종류별로 정리해서 넣어주시면 됩니다.
+        const stickerData = [
+            // 노랑(출석)
+            { date: "3/14", type: "filled-y" }, { date: "3/16", type: "filled-y" },
+            // 분홍(개근)
+            { date: "3/18", type: "filled-p" }, { date: "3/18", type: "filled-p" }, { date: "3/18", type: "filled-p" },
+            // 초록(숙제)
+            { date: "3/14", type: "filled-g" }, { date: "3/15", type: "filled-g" },
+            // 빨강(테스트)
+            { date: "3/17", type: "filled-r" }, { date: "3/17", type: "filled-r" }
+        ];
+
+        const totalCells = 50;
+        const board = document.getElementById('board');
+        const totalCountDisplay = document.getElementById('totalCount');
+
+        for (let i = 0; i < totalCells; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('sticker-cell');
+            
+            if (stickerData[i]) {
+                cell.classList.add(stickerData[i].type);
+                cell.innerText = stickerData[i].date;
+            } else {
+                cell.innerText = i + 1;
+                cell.style.opacity = "0.2";
+            }
+            board.appendChild(cell);
+        }
+        totalCountDisplay.innerText = stickerData.length;
+    </script>
+</body>
+</html>
