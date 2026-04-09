@@ -1,1 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 수업일지 작성</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
 
+        /* 🔵 주신 코딩의 사이드바 애니메이션 유지 */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .menu-open { transform: translateX(0) !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* 입력 카드 디자인 */
+        .input-card { background: white; border-radius: 1.5rem; padding: 1.2rem; border: 1px solid #f1f5f9; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center; }
+        .label-text { font-weight: 800; color: #475569; font-size: 0.85rem; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 6px; }
+        input, select, textarea { border: 2px solid #f8fafc; border-radius: 0.8rem; padding: 0.7rem; width: 100%; font-weight: 600; outline: none; background-color: #f8fafc; font-size: 0.9rem; }
+        input:focus { border-color: #2563eb; background-color: white; }
+
+        .score-btn { border: 2px solid #f1f5f9; border-radius: 0.8rem; padding: 0.6rem; font-weight: 700; transition: 0.2s; background: white; font-size: 12px; }
+        .score-btn.active { border-color: #10b981; background-color: #ecfdf5; color: #047857; }
+        .score-btn.incomplete { border-color: #f43f5e; background-color: #fff1f2; color: #e11d48; }
+
+        /* 초기화 버튼 스타일 (요청: 글씨 크기 축소) */
+        .reset-btn { font-size: 9px; padding: 2px 6px; background: #f1f5f9; border-radius: 6px; color: #64748b; font-weight: 700; border: 1px solid #e2e8f0; }
+        .reset-btn:hover { background: #e2e8f0; }
+
+        /* 보강지정 달력 내부 폰트/스타일 최적화 */
+        input[type="datetime-local"] { position: relative; appearance: none; -webkit-appearance: none; }
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            background: transparent; bottom: 0; color: transparent; cursor: pointer; height: auto; left: 0; position: absolute; right: 0; top: 0; width: auto;
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen relative overflow-x-hidden">
+
+    <header class="md:hidden bg-white border-b border-slate-100 p-4 flex items-center justify-between sticky top-0 z-[60]">
+        <h1 class="text-xl font-black text-blue-600 flex items-center gap-2">
+            <img src="../logo.png" alt="M" class="w-7 h-7 object-contain" onerror="this.src='https://via.placeholder.com/40?text=M'">
+            더엠수학
+        </h1>
+        <button id="menu-toggle" class="p-2 text-slate-500">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+    </header>
+
+    <aside id="mobile-menu" class="fixed md:relative inset-y-0 left-0 w-64 bg-white border-r border-slate-100 flex flex-col z-[70] -translate-x-full md:translate-x-0">
+        <div class="p-6 hidden md:flex items-center justify-between">
+            <h1 class="text-2xl font-black text-blue-600 flex items-center gap-2">
+                <img src="../logo.png" alt="M" class="w-8 h-8 object-contain">
+                더엠수학
+            </h1>
+        </div>
+        
+        <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
+            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Teacher Dashboard</div>
+            <a href="#" class="flex items-center gap-3 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm mb-2">Home</a>
+            
+            <div class="space-y-0.5">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5 text-center"></i> 숙제체크</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5 text-center"></i> 굿티커 부여</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5 text-center"></i> 출결관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> 보강일정</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm"><i class="fa-solid fa-calendar-check w-5 text-center"></i> 수업일지 작성</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트 생성</a>
+            </div>
+
+            <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Management</div>
+            <div class="space-y-0.5">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경</a>
+            </div>
+            
+            <div class="mt-auto pt-10 pb-4">
+                <a href="../index.html" class="flex items-center gap-3 px-4 py-3 text-rose-500 bg-rose-50 rounded-2xl text-sm font-bold justify-center">
+                    <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
+
+    <main class="flex-1 p-5 md:p-10 w-full max-w-6xl mx-auto">
+        <div class="mb-6">
+            <h2 class="text-2xl font-black text-slate-800 tracking-tight">수업일지 작성</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div class="grid grid-cols-2 gap-3">
+                <div class="input-card">
+                    <label class="label-text">학생선택</label>
+                    <select><option>선택</option></select>
+                </div>
+                <div class="input-card">
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="label-text mb-0">누적지각</label>
+                        <div class="relative">
+                            <button type="button" onclick="document.getElementById('reset-reason').showPicker()" class="reset-btn">초기화</button>
+                            <select id="reset-reason" onchange="handleReset(this)" class="absolute opacity-0 pointer-events-none" style="top:0; right:0; width:1px; height:1px; font-size: 0.72rem;">
+                                <option value="">사유 선택</option>
+                                <option value="보강실시" style="font-size: 0.72rem;">보강실시</option>
+                                <option value="부모님요청" style="font-size: 0.72rem;">부모님요청</option>
+                                <option value="유효기간초과" style="font-size: 0.72rem;">유효기간초과</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="text" id="late-display" placeholder="00분" class="text-center text-rose-500" value="45분" readonly>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="input-card">
+                    <label class="label-text">오늘진도</label>
+                    <input type="text" placeholder="입력">
+                </div>
+                <div class="input-card">
+                    <label class="label-text">다음진도</label>
+                    <input type="text" placeholder="입력">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+                <div class="input-card col-span-2">
+                    <label class="label-text">숙제완성도</label>
+                    <div class="grid grid-cols-4 gap-1">
+                        <button class="score-btn" onclick="setScore(this)">★1</button>
+                        <button class="score-btn active" onclick="setScore(this)">★2</button>
+                        <button class="score-btn" onclick="setScore(this)">★3</button>
+                        <button class="score-btn" onclick="setScore(this)">★4</button>
+                    </div>
+                </div>
+                <div class="input-card col-span-1">
+                    <label class="label-text">미완료</label>
+                    <button class="score-btn w-full" onclick="setIncomplete(this)">미완료</button>
+                </div>
+            </div>
+
+            <div class="input-card">
+                <label class="label-text">상담요청</label>
+                <textarea placeholder="상담이 필요한 내용을 입력하세요" class="h-14"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="input-card">
+                    <label class="label-text">DT</label>
+                    <input type="number" placeholder="점수" class="text-center">
+                </div>
+                <div class="input-card">
+                    <label class="label-text">매일국어</label>
+                    <input type="number" placeholder="XP" class="text-center">
+                </div>
+            </div>
+
+            <div class="input-card">
+                <label class="label-text">관심학생</label>
+                <textarea placeholder="관심학생 지정 사유 입력" class="h-14"></textarea>
+            </div>
+
+            <div class="input-card">
+                <label class="label-text">보강지정 (날짜/시간 선택)</label>
+                <input type="datetime-local" id="makeup-session" class="text-slate-600 font-bold" step="300" lang="ko-KR">
+            </div>
+
+            <div class="flex items-end">
+                <button onclick="alert('일지가 저장되었습니다.')" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black text-xl shadow-xl hover:bg-black transition-all active:scale-95">
+                    수업일지 저장하기
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('menu-open');
+            menuOverlay.classList.toggle('hidden');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // 지각 초기화 로직 (선택창 방식)
+        function handleReset(selectElement) {
+            const reason = selectElement.value;
+            if (reason) {
+                if(confirm(`사유: [${reason}]\n지각 시간을 0분으로 초기화하시겠습니까?`)) {
+                    document.getElementById('late-display').value = "0분";
+                    alert(`[${reason}] 사유로 지각 시간이 초기화되었습니다.`);
+                }
+                selectElement.value = ""; 
+            }
+        }
+
+        function setScore(btn) {
+            const btns = btn.parentElement.querySelectorAll('.score-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            const parentCard = btn.closest('.grid-cols-3');
+            if(parentCard) {
+                const incBtn = parentCard.querySelector('.incomplete');
+                if(incBtn) incBtn.classList.remove('incomplete');
+            }
+            btn.classList.add('active');
+        }
+
+        function setIncomplete(btn) {
+            const parentCard = btn.closest('.grid-cols-3');
+            const scoreBtns = parentCard.querySelectorAll('.score-btn');
+            scoreBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('incomplete');
+        }
+    </script>
+</body>
+</html>
