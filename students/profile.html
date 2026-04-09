@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 이영희 프로필</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .menu-open { transform: translateX(0) !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .stat-card { background: white; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #f1f5f9; }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen relative overflow-x-hidden">
+    
+    <aside id="mobile-menu" class="fixed md:relative inset-y-0 left-0 w-64 bg-white border-r border-slate-100 flex flex-col z-[70] -translate-x-full md:translate-x-0">
+        <div class="p-6 hidden md:flex items-center justify-between border-b border-slate-100 mb-2">
+            <h1 class="text-xl font-normal text-emerald-600 flex items-center gap-2">
+                <img src="../logo.png" alt="M" class="w-7 h-7 object-contain">
+                더엠수학
+            </h1>
+        </div>
+        <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
+            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Dashboard</div>
+            <a href="../admin_main.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm mb-2">Home</a>
+            <div class="space-y-0.5">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
+                </div>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-5 md:p-12 w-full max-w-7xl mx-auto">
+        <div class="flex items-center gap-4 mb-8">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center bg-white border border-slate-100 rounded-full text-slate-400 hover:text-emerald-500 transition-colors">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2 class="text-2xl font-black text-slate-800">학생 상세 프로필</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div class="lg:col-span-1 bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm flex flex-col items-center text-center">
+                <div class="w-32 h-32 bg-rose-50 rounded-full flex items-center justify-center mb-6 relative">
+                    <span class="text-4xl font-black text-rose-500">영희</span>
+                    <div class="absolute bottom-1 right-1 w-8 h-8 bg-emerald-500 border-4 border-white rounded-full"></div>
+                </div>
+                <div class="flex gap-2 mb-2">
+                    <span class="px-3 py-1 bg-rose-500 text-white text-[10px] font-black rounded-full">관심학생</span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 text-[10px] font-black rounded-full">중3</span>
+                </div>
+                <h3 class="text-2xl font-black text-slate-800 mb-1">이영희</h3>
+                <p class="text-slate-400 font-bold mb-6">010-9876-5432</p>
+                
+                <div class="w-full grid grid-cols-2 gap-3 mb-6">
+                    <div class="p-4 bg-slate-50 rounded-2xl text-center">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">등록일</p>
+                        <p class="font-black text-slate-700">2024.02.15</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-2xl text-center">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">담당반</p>
+                        <p class="font-black text-emerald-600">중3-심화B</p>
+                    </div>
+                </div>
+                
+                <button class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black hover:bg-black transition-all mb-3">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i> 정보 수정하기
+                </button>
+            </div>
+
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="stat-card flex items-center justify-between">
+                    <div>
+                        <p class="text-slate-400 font-bold text-sm">출석률</p>
+                        <h4 class="text-3xl font-black text-emerald-500">92%</h4>
+                        <p class="text-[11px] text-slate-300 font-bold mt-1">최근 30일 기준</p>
+                    </div>
+                    <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-500 text-2xl">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                </div>
+                <div class="stat-card flex items-center justify-between">
+                    <div>
+                        <p class="text-slate-400 font-bold text-sm">보유 굿티커</p>
+                        <h4 class="text-3xl font-black text-amber-500">145개</h4>
+                        <p class="text-[11px] text-slate-300 font-bold mt-1">학원 전체 5위</p>
+                    </div>
+                    <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-500 text-2xl">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+                <div class="stat-card md:col-span-2 overflow-hidden relative">
+                    <div class="flex justify-between items-end mb-6">
+                        <div>
+                            <p class="text-slate-400 font-bold text-sm">최근 테스트 점수 추이</p>
+                            <h4 class="text-xl font-black text-slate-800">평균 88.5점</h4>
+                        </div>
+                        <span class="text-emerald-500 font-black text-sm"><i class="fa-solid fa-caret-up"></i> 12% 상승</span>
+                    </div>
+                    <div class="flex items-end gap-3 h-24">
+                        <div class="flex-1 bg-slate-100 rounded-t-lg h-[60%] relative group">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">70</span>
+                        </div>
+                        <div class="flex-1 bg-slate-100 rounded-t-lg h-[75%] relative group">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">82</span>
+                        </div>
+                        <div class="flex-1 bg-emerald-400 rounded-t-lg h-[95%] relative group">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-emerald-500 opacity-100 transition-opacity">98</span>
+                        </div>
+                        <div class="flex-1 bg-slate-100 rounded-t-lg h-[80%] relative group">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">85</span>
+                        </div>
+                        <div class="flex-1 bg-emerald-500 rounded-t-lg h-[90%] relative group">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-emerald-600 opacity-100 transition-opacity">92</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-2 px-1">
+                        <span class="text-[10px] font-bold text-slate-300">1월</span>
+                        <span class="text-[10px] font-bold text-slate-300">2월</span>
+                        <span class="text-[10px] font-bold text-slate-300">3월</span>
+                        <span class="text-[10px] font-bold text-slate-300">4월</span>
+                        <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter">Current</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm">
+            <div class="flex border-b border-slate-50 px-8">
+                <button class="px-6 py-5 border-b-4 border-emerald-500 text-emerald-600 font-black text-sm">수업일지</button>
+                <button class="px-6 py-5 border-b-4 border-transparent text-slate-400 font-bold text-sm hover:text-slate-600 transition-colors">출결기록</button>
+                <button class="px-6 py-5 border-b-4 border-transparent text-slate-400 font-bold text-sm hover:text-slate-600 transition-colors">상담기록</button>
+            </div>
+            
+            <div class="p-8">
+                <div class="space-y-6">
+                    <div class="flex gap-6">
+                        <div class="hidden md:block w-24 pt-1">
+                            <p class="text-sm font-black text-slate-800">2024.03.21</p>
+                            <p class="text-[11px] text-slate-400 font-bold">목요일 수업</p>
+                        </div>
+                        <div class="flex-1 p-6 bg-slate-50 rounded-2xl relative">
+                            <div class="flex justify-between items-start mb-3">
+                                <h5 class="font-black text-slate-800">수학(상) 다항식의 연산 심화</h5>
+                                <span class="px-2 py-1 bg-emerald-100 text-emerald-600 text-[10px] font-black rounded">과제완료</span>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed font-medium mb-4">
+                                다항식의 나눗셈 부분에서 계수 비교법을 활용하는 문제를 완벽히 이해함. 
+                                다만 복잡한 계산에서 실수가 잦아 집중 연산 연습이 필요해 보임.
+                            </p>
+                            <div class="flex gap-4">
+                                <span class="text-[11px] font-bold text-slate-400"><i class="fa-solid fa-book mr-1"></i> 과제: 상</span>
+                                <span class="text-[11px] font-bold text-slate-400"><i class="fa-solid fa-pencil mr-1"></i> 테스트: 95점</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-6">
+                        <div class="hidden md:block w-24 pt-1">
+                            <p class="text-sm font-black text-slate-800">2024.03.18</p>
+                            <p class="text-[11px] text-slate-400 font-bold">월요일 수업</p>
+                        </div>
+                        <div class="flex-1 p-6 bg-slate-50 rounded-2xl">
+                            <div class="flex justify-between items-start mb-3">
+                                <h5 class="font-black text-slate-800">수학(상) 나머지 정리와 인수분해</h5>
+                                <span class="px-2 py-1 bg-amber-100 text-amber-600 text-[10px] font-black rounded">과제미흡</span>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed font-medium">
+                                나머지 정리 응용 문제에서 다소 어려움을 느낌. 보강 시간에 유사 유형 10문제를 추가 풀이하기로 함.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="w-full mt-8 py-4 border-2 border-dashed border-slate-100 text-slate-300 font-black rounded-2xl hover:bg-slate-50 hover:border-slate-200 hover:text-slate-400 transition-all">
+                    기록 더보기
+                </button>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
