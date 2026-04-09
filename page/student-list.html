@@ -3,36 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>더엠수학 | 학생관리</title>
+    <title>더엠수학 | 학생현황</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; }
-        
         #mobile-menu { transition: transform 0.3s ease-in-out; }
         .menu-open { transform: translateX(0) !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        .student-item {
+            background-color: white;
+            border-radius: 1.5rem;
+            border: 1px solid #f1f5f9;
+            padding: 1.25rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            position: relative;
+        }
+        @media (min-width: 1024px) {
+            .student-item:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        }
+        .student-item:active { transform: scale(0.98); }
+        .search-container input { border: 2px solid #f1f5f9; transition: all 0.2s; }
+        .search-container input:focus { border-color: #10b981; outline: none; background-color: white; }
 
-        /* 학생 카드 스타일 */
-        .student-card { background: white; border-radius: 1.2rem; padding: 1.2rem; border: 1px solid #f1f5f9; transition: 0.2s; }
-        .student-card:active { transform: scale(0.98); background-color: #f8fafc; }
+        /* 드롭다운 메뉴 스타일 (Hover 기반) */
+        .dropdown-container { position: relative; display: inline-block; }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 80%;
+            background: white;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 80;
+            min-width: 140px;
+            padding: 0.5rem 0;
+        }
+        /* 컨테이너에 마우스 올리면 메뉴 표시 */
+        .dropdown-container:hover .dropdown-menu { display: block; }
         
-        /* 등급별 뱃지 */
-        .badge { padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; }
-        .badge-blue { background: #eff6ff; color: #2563eb; }
-        .badge-green { background: #f0fdf4; color: #16a34a; }
-        
-        /* 검색창 스타일 */
-        .search-box { background: white; border: 2px solid #f1f5f9; border-radius: 1rem; padding: 0.8rem 1rem; width: 100%; font-weight: 600; outline: none; }
-        .search-box:focus { border-color: #2563eb; }
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .dropdown-item:hover { background-color: #f8fafc; color: #10b981; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen relative overflow-x-hidden">
-
+    
     <header class="md:hidden bg-white border-b border-slate-100 p-4 flex items-center justify-between sticky top-0 z-[60]">
-        <h1 class="text-xl font-black text-blue-600 flex items-center gap-2">
+        <h1 class="text-xl font-black text-emerald-600 flex items-center gap-2">
             <img src="../logo.png" alt="M" class="w-7 h-7 object-contain" onerror="this.src='https://via.placeholder.com/40?text=M'">
             더엠수학
         </h1>
@@ -42,129 +73,284 @@
     </header>
 
     <aside id="mobile-menu" class="fixed md:relative inset-y-0 left-0 w-64 bg-white border-r border-slate-100 flex flex-col z-[70] -translate-x-full md:translate-x-0">
-        <div class="p-6 hidden md:flex items-center justify-between">
-            <h1 class="text-2xl font-black text-blue-600 flex items-center gap-2">
-                <img src="../logo.png" alt="M" class="w-8 h-8 object-contain">
+        <div class="p-6 hidden md:flex items-center justify-between border-b border-slate-100 mb-2">
+            <h1 class="text-xl font-normal text-emerald-600 flex items-center gap-2">
+                <img src="../logo.png" alt="M" class="w-7 h-7 object-contain">
                 더엠수학
             </h1>
         </div>
         
         <nav class="flex-1 flex flex-col p-4 space-y-0.5 overflow-y-auto no-scrollbar">
-            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Teacher Dashboard</div>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm mb-2">Home</a>
+            <div class="pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Dashboard</div>
+            <a href="../admin_main.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm mb-2">Home</a>
             
             <div class="space-y-0.5">
-                <a href="#" class="flex items-center gap-3 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5 text-center"></i> 숙제체크</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5 text-center"></i> 굿티커 부여</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5 text-center"></i> 출결관리</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> 보강일정</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-calendar-check w-5 text-center"></i> 수업일지 작성</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트 생성</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm"><i class="fa-solid fa-user-group w-5 text-center"></i> 학생현황</a>
+                <a href="../classes/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-layer-group w-5 text-center"></i> 반현황</a>
+                <a href="../homework/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-book-open w-5 text-center"></i> 숙제현황</a>
+                <a href="../stickers/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-star w-5 text-center"></i> 굿티커현황</a>
+                <a href="../attendance/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-check w-5 text-center"></i> 출결현황</a>
+                <a href="../makeup/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> 보강현황</a>
+                <a href="../journals/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-calendar-check w-5 text-center"></i> 수업일지</a>
+                <a href="../notices/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-bullhorn w-5 text-center"></i> 공지사항</a>
+                <a href="../reports/index.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chart-line w-5 text-center"></i> 학습리포트</a>
             </div>
 
             <div class="pt-6 pb-2 text-[10px] font-bold text-slate-300 px-4 uppercase tracking-widest">Management</div>
             <div class="space-y-0.5">
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경</a>
-            </div>
-            
-            <div class="mt-auto pt-10 pb-4">
-                <a href="../index.html" class="flex items-center gap-3 px-4 py-3 text-rose-500 bg-rose-50 rounded-2xl text-sm font-bold justify-center">
-                    <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+                <a href="../manage/students.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-graduate w-5 text-center"></i> 학생관리</a>
+                <a href="../manage/classes.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 반관리</a>
+                <a href="../manage/teachers.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-user-gear w-5 text-center"></i> 선생님관리</a>
+                <a href="../manage/settings.html" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm"><i class="fa-solid fa-gear w-5 text-center"></i> 설정</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm">
+                    <i class="fa-solid fa-key w-5 text-center"></i> 비밀번호 변경
                 </a>
             </div>
         </nav>
+        
+        <div class="p-4 border-t border-slate-100">
+            <a href="../index.html" class="flex items-center justify-center gap-2 px-4 py-3 bg-rose-50 text-rose-600 rounded-xl font-bold text-sm hover:bg-rose-100 transition-colors">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                로그아웃
+            </a>
+        </div>
     </aside>
 
     <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden"></div>
 
-    <main class="flex-1 p-5 md:p-10 w-full max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+    <main class="flex-1 p-5 md:p-12 w-full max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
-                <h2 class="text-2xl font-black text-slate-800 tracking-tight">학생관리</h2>
-                <p class="text-slate-400 text-sm font-bold">현재 재원생: 42명</p>
+                <h2 class="text-3xl font-black text-slate-800 tracking-tight">학생현황</h2>
+                <p class="text-slate-400 font-bold mt-1">학원의 소중한 자산, <span class="text-emerald-500">53명</span>의 학생이 함께하고 있습니다.</p>
             </div>
-            <button class="bg-blue-600 text-white px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-100 active:scale-95 transition-all">
+            <button class="bg-slate-900 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl hover:bg-black active:scale-95 transition-all">
                 <i class="fa-solid fa-user-plus"></i> 신규 학생 등록
             </button>
         </div>
 
-        <div class="mb-6 flex gap-2">
-            <div class="relative flex-1">
+        <div class="search-container mb-8 flex flex-col md:flex-row gap-3">
+            <div class="relative flex-[2]">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input type="text" class="search-box pl-11" placeholder="학생 이름 또는 연락처 검색">
+                <input type="text" placeholder="학생 이름, 학교, 연락처로 검색..." class="w-full pl-12 pr-4 py-4 bg-white rounded-2xl font-medium">
             </div>
-            <button class="bg-white border-2 border-slate-100 p-3 rounded-2xl text-slate-600">
-                <i class="fa-solid fa-sliders"></i>
-            </button>
+            <select class="flex-1 px-6 py-4 bg-white border-2 border-f1f5f9 rounded-2xl font-bold text-slate-600 outline-none focus:border-emerald-500">
+                <option>전체 학년</option>
+                <option>초등부</option>
+                <option>중등부</option>
+                <option>고등부</option>
+            </select>
+            <select class="flex-1 px-6 py-4 bg-white border-2 border-f1f5f9 rounded-2xl font-bold text-slate-600 outline-none focus:border-emerald-500">
+                <option>전체 반</option>
+                <option>경시반</option>
+                <option>기초반</option>
+                <option>중2-A반</option>
+                <option>고1-수능반</option>
+            </select>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             
-            <div class="student-card shadow-sm">
+            <div class="student-item">
                 <div class="flex items-start justify-between mb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
-                            <i class="fa-solid fa-user text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-black text-lg text-slate-800">김철수</h3>
-                            <span class="badge badge-blue">중2-A반</span>
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">중2</span>
+                        <span class="text-[10px] font-black px-2 py-1 bg-blue-50 text-blue-600 rounded-lg">A반</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
                         </div>
                     </div>
-                    <button class="text-slate-300"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                 </div>
-                <div class="space-y-2 mb-4 text-sm font-bold text-slate-500">
-                    <div class="flex items-center gap-2"><i class="fa-solid fa-phone w-4"></i> 010-1234-5678</div>
-                    <div class="flex items-center gap-2"><i class="fa-solid fa-star w-4 text-yellow-400"></i> 굿티커: 12개</div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <button class="py-2 bg-slate-50 text-slate-600 rounded-xl text-xs font-bold">수업기록</button>
-                    <button class="py-2 bg-blue-50 text-blue-600 rounded-xl text-xs font-bold">상세정보</button>
+                <h3 class="text-lg font-black text-slate-800">김철수</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-1234-5678</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-slate-50 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-slate-300 font-bold">굿티커</p><p class="font-black text-amber-500">12개</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">출결</p><p class="font-black text-emerald-500">등원</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">지각누적</p><p class="font-black text-rose-500">45분 <button class="text-[10px] text-slate-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
                 </div>
             </div>
 
-            <div class="student-card shadow-sm border-rose-100 bg-rose-50/30">
+            <div class="student-item border-rose-100 bg-rose-50/20">
                 <div class="flex items-start justify-between mb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center text-rose-400">
-                            <i class="fa-solid fa-user text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-black text-lg text-slate-800">이영희</h3>
-                            <span class="badge badge-green">고1-수능반</span>
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-200 text-slate-700 rounded-lg">중3</span>
+                        <span class="text-[10px] font-black px-2 py-1 bg-rose-500 text-white rounded-lg">관심학생</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-rose-100 text-rose-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
                         </div>
                     </div>
-                    <span class="text-[10px] bg-rose-500 text-white px-2 py-1 rounded-full font-black">관심학생</span>
                 </div>
-                <div class="space-y-2 mb-4 text-sm font-bold text-slate-500">
-                    <div class="flex items-center gap-2"><i class="fa-solid fa-phone w-4"></i> 010-9876-5432</div>
-                    <div class="flex items-center gap-2"><i class="fa-solid fa-star w-4 text-yellow-400"></i> 굿티커: 5개</div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <button class="py-2 bg-white text-slate-600 rounded-xl text-xs font-bold border border-slate-100">수업기록</button>
-                    <button class="py-2 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-100">상세정보</button>
+                <h3 class="text-lg font-black text-slate-800">이영희</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-9876-5432</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-rose-100 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-rose-300 font-bold">굿티커</p><p class="font-black text-amber-500">5개</p></div>
+                    <div class="text-center border-l border-rose-100"><p class="text-[9px] text-rose-300 font-bold">출결</p><p class="font-black text-rose-600">결석</p></div>
+                    <div class="text-center border-l border-rose-100"><p class="text-[9px] text-rose-300 font-bold">지각누적</p><p class="font-black text-slate-400">0분 <button class="text-[10px] text-rose-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
                 </div>
             </div>
 
+            <div class="student-item">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">초5</span>
+                        <span class="text-[10px] font-black px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg">경시반</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-black text-slate-800">배남수</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-1111-2222</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-slate-50 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-slate-300 font-bold">굿티커</p><p class="font-black text-amber-500">30개</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">출결</p><p class="font-black text-emerald-500">등원</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">지각누적</p><p class="font-black text-slate-400">5분 <button class="text-[10px] text-slate-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
+                </div>
             </div>
+
+            <div class="student-item">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">초6</span>
+                        <span class="text-[10px] font-black px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg">기초반</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-black text-slate-800">오상민</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-3333-4444</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-slate-50 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-slate-300 font-bold">굿티커</p><p class="font-black text-amber-500">14개</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">출결</p><p class="font-black text-slate-400">하원</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">지각누적</p><p class="font-black text-rose-500">12분 <button class="text-[10px] text-slate-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
+                </div>
+            </div>
+
+            <div class="student-item">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">초4</span>
+                        <span class="text-[10px] font-black px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg">경시반</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-black text-slate-800">공서연</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-5555-6666</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-slate-50 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-slate-300 font-bold">굿티커</p><p class="font-black text-amber-500">42개</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">출결</p><p class="font-black text-emerald-500">등원</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">지각누적</p><p class="font-black text-slate-400">0분 <button class="text-[10px] text-slate-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
+                </div>
+            </div>
+
+            <div class="student-item border-amber-100 bg-amber-50/20">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">초5</span>
+                        <span class="text-[10px] font-black px-2 py-1 bg-amber-500 text-white rounded-lg">상담요청</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-amber-100 text-amber-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-black text-slate-800">김종섭</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-7777-8888</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-amber-100 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-amber-600 font-bold">굿티커</p><p class="font-black text-amber-500">9개</p></div>
+                    <div class="text-center border-l border-amber-100"><p class="text-[9px] text-amber-600 font-bold">출결</p><p class="font-black text-rose-500">결석</p></div>
+                    <div class="text-center border-l border-amber-100"><p class="text-[9px] text-amber-600 font-bold">지각누적</p><p class="font-black text-slate-400">0분 <button class="text-[10px] text-amber-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
+                </div>
+            </div>
+
+            <div class="student-item">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">초6</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-black text-slate-800">심현기</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-8888-9999</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-slate-50 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-slate-300 font-bold">굿티커</p><p class="font-black text-amber-500">18개</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">출결</p><p class="font-black text-emerald-500">등원</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">지각누적</p><p class="font-black text-rose-500">22분 <button class="text-[10px] text-slate-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
+                </div>
+            </div>
+
+            <div class="student-item">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex gap-1 flex-wrap">
+                        <span class="text-[10px] font-black px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">초4</span>
+                    </div>
+                    <div class="dropdown-container">
+                        <button class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item"><i class="fa-solid fa-book-bookmark text-slate-400"></i> 수업일지 작성</div>
+                            <div class="dropdown-item"><i class="fa-solid fa-user-pen text-slate-400"></i> 정보 수정</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-black text-slate-800">이철수</h3>
+                <p class="text-sm text-slate-400 font-bold mb-4">010-0000-1111</p>
+                <div class="grid grid-cols-3 gap-1 border-t border-slate-50 pt-4">
+                    <div class="text-center"><p class="text-[9px] text-slate-300 font-bold">굿티커</p><p class="font-black text-amber-500">25개</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">출결</p><p class="font-black text-emerald-500">등원</p></div>
+                    <div class="text-center border-l border-slate-50"><p class="text-[9px] text-slate-300 font-bold">지각누적</p><p class="font-black text-slate-400">0분 <button class="text-[10px] text-slate-300"><i class="fa-solid fa-rotate-left"></i></button></p></div>
+                </div>
+            </div>
+
+        </div>
     </main>
 
     <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
 
-        function toggleMenu() {
-            mobileMenu.classList.toggle('menu-open');
-            menuOverlay.classList.toggle('hidden');
-        }
-
-        menuToggle.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
+            if (menuToggle && mobileMenu && menuOverlay) {
+                function toggleMenu() {
+                    mobileMenu.classList.toggle('menu-open');
+                    menuOverlay.classList.toggle('hidden');
+                }
+                menuToggle.addEventListener('click', toggleMenu);
+                menuOverlay.addEventListener('click', toggleMenu);
+            }
+        });
     </script>
 </body>
 </html>
