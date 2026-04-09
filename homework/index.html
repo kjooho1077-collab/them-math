@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더엠수학 | 숙제 현황</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=NotoSansKR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { font-style: normal !important; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .badge-ongoing { background-color: #fff1f2; color: #f43f5e; } 
+        .badge-done { background-color: #f0fdf4; color: #16a34a; }    
+        
+        /* ⭐ 황금색 별 스타일 */
+        .star-rating .fa-star { color: #f59e0b; } /* amber-500 */
+        .star-rating .fa-regular.fa-star { color: #e2e8f0; } /* slate-200 (빈 별) */
+    </style>
+</head>
+<body class="p-5 md:p-10">
+
+    <div class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
+        <button onclick="history.back()" class="text-slate-400 hover:text-emerald-600 transition-colors p-2">
+            <i class="fa-solid fa-arrow-left text-2xl"></i>
+        </button>
+        <h1 class="text-xl font-black text-slate-800">숙제 현황</h1>
+        <div class="w-10"></div> 
+    </div>
+
+    <main class="max-w-4xl mx-auto space-y-4">
+        
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm text-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">진행중</p>
+                <p class="text-xl font-black text-rose-500">2</p>
+            </div>
+            <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm text-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">이번주 완료</p>
+                <p class="text-xl font-black text-emerald-500">1</p>
+            </div>
+            <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm text-center star-rating">
+                <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">평균 완성도</p>
+                <div class="text-sm flex justify-center gap-0.5">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star text-slate-200"></i> </div>
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-bold badge-ongoing">진행중</span>
+                        <span class="text-[11px] text-slate-400 font-medium">마감: ~04/10</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-sm md:text-base">미분법 개념원리 p.42~p.48 풀이</h3>
+                </div>
+                
+                <button class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-bold transition-colors">
+                    완료 선택
+                </button>
+                
+                <div class="star-rating flex gap-0.5 text-sm">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-bold badge-ongoing">진행중</span>
+                        <span class="text-[11px] text-slate-400 font-medium">마감: ~04/12</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-sm md:text-base">쎈 수II 320번~380번 오답노트</h3>
+                </div>
+                
+                <button class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-bold transition-colors">
+                    완료 선택
+                </button>
+                
+                <div class="star-rating flex gap-0.5 text-sm">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4 opacity-70">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-bold badge-done">완료됨</span>
+                        <span class="text-[11px] text-slate-400 font-medium italic">학생 완료</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-sm md:text-base line-through text-slate-400">삼각형의 넓이 심화 프린트</h3>
+                </div>
+                
+                <div class="px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-emerald-100">
+                    <i class="fa-solid fa-check"></i>
+                    완료됨
+                </div>
+                
+                <div class="star-rating flex gap-0.5 text-sm">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-slate-400 text-[11px] py-6 leading-relaxed">
+            숙제 제출 확인은 담당 선생님께 문의해 주세요!<br>화이팅! 할 수 있다! 🔥
+        </p>
+
+    </main>
+
+</body>
+</html>
 
